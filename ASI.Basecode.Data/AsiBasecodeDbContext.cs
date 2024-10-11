@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -17,41 +18,77 @@ namespace ASI.Basecode.Data
         {
         }
 
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<User> Users { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Addr=MARS\\SQLEXPRESS; database=AsiBasecodeDB; Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<Category>(entity =>
             {
-                entity.HasIndex(e => e.UserId, "UQ__Users__1788CC4D5F4A160F")
-                    .IsUnique();
+                entity.ToTable("Category");
 
-                entity.Property(e => e.CreatedBy)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateUpdated).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CreatedTime).HasColumnType("datetime");
-
                 entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Expense>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("Expense");
+
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateUpdated).HasColumnType("datetime");
+
+                entity.Property(e => e.Description)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateUpdated).HasColumnType("datetime");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.UpdatedBy)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UpdatedTime).HasColumnType("datetime");
-
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                entity.Property(e => e.Username)
+                    .HasMaxLength(255)
                     .IsUnicode(false);
             });
 
