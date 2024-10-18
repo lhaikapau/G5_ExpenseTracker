@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -52,8 +51,6 @@ namespace ASI.Basecode.Data
 
             modelBuilder.Entity<Expense>(entity =>
             {
-                entity.HasNoKey();
-
                 entity.ToTable("Expense");
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
