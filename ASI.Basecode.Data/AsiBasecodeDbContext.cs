@@ -68,24 +68,29 @@ namespace ASI.Basecode.Data
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.DateCreated).HasColumnType("datetime");
+                entity.ToTable("User");
 
-                entity.Property(e => e.DateUpdated).HasColumnType("datetime");
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(255)
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(255)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UpdatedBy)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Username)
-                    .HasMaxLength(255)
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
