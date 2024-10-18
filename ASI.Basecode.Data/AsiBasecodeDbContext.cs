@@ -36,6 +36,10 @@ namespace ASI.Basecode.Data
             {
                 entity.ToTable("Category");
 
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
                 entity.Property(e => e.DateUpdated).HasColumnType("datetime");
