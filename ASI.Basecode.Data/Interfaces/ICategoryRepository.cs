@@ -10,5 +10,12 @@ namespace ASI.Basecode.Data.Interfaces
     public interface ICategoryRepository
     {
         void AddCategory(Category model);
+
+        IEnumerable<Category> RetrieveAll();
+
+        void UpdateCategory(Category model);
+
+        void DeleteCategory(Category model);
+
     }
 }

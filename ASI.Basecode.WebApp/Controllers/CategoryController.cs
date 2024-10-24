@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace ASI.Basecode.WebApp.Controllers
 {
     /// <summary>
-   /// Book Controller
-   /// </summary>
+    /// Book Controller
+    /// </summary>
     public class CategoryController : ControllerBase<CategoryController>
     {
         private readonly ICategoryService _categoryService;
         /// Constructor
-       /// </summary>       
+        /// </summary>       
         /// <param name="httpContextAccessor"></param>
         /// <param name="loggerFactory"></param>        
         /// <param name="configuration"></param>
@@ -34,7 +34,8 @@ namespace ASI.Basecode.WebApp.Controllers
         // GET: CategoryController
         public IActionResult Index()
         {
-            return View();
+            var data = _categoryService.RetrieveAll(UserId);
+            return View(data);
         }
 
         #region Get Methods
@@ -44,15 +45,52 @@ namespace ASI.Basecode.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Edit(int CategoryId)
+        {
+            var data = _categoryService.RetrieveCategory(CategoryId);
+            return View(data);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int CategoryId)
+        {
+            var data = _categoryService.RetrieveCategory(CategoryId);
+            return View(data);
+        }
+
+
         #endregion
 
         #region Post Methods
         [HttpPost]
-        public IActionResult Create(CategoryViewModel model) 
+        public IActionResult Create(CategoryViewModel model)
         {
             _categoryService.AddCategory(model, UserId);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Edit(CategoryViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model); // Return the model with validation errors
+            }
+
+            _categoryService.UpdateCategory(model, UserId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult PostDelete(int CategoryId)
+        {
+            _categoryService.DeleteCategory(CategoryId);
+            return RedirectToAction("Index");
+        }
+
         #endregion
+
+
     }
 }

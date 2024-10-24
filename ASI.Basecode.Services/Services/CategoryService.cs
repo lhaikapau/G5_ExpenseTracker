@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ASI.Basecode.Services.ServiceModels;
+using Microsoft.Extensions.Configuration;
 
 namespace ASI.Basecode.Services.Services
 {
@@ -15,22 +16,76 @@ namespace ASI.Basecode.Services.Services
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper, IConfiguration configuration)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
-        }   
+            _config = configuration;
+        }
 
         public void AddCategory(CategoryViewModel model, string userId)
         {
             var newCategory = new Category();
             newCategory.Name = model.Name;
-            newCategory.Description = model.Description;    
+            newCategory.Description = model.Description;
             newCategory.CreatedBy = userId;
             newCategory.DateCreated = DateTime.Now;
             newCategory.DateUpdated = DateTime.Now;
             _categoryRepository.AddCategory(newCategory);
+        }
+
+        public List<CategoryViewModel> RetrieveAll(string UserId)
+        {
+            var serverUrl = _config.GetValue<string>("ServerUrl");
+            var data = _categoryRepository
+                .RetrieveAll()
+                .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Select(s => new CategoryViewModel
+                {
+                    CategoryId = s.CategoryId,
+                    Name = s.Name,
+                    Description = s.Description
+                })
+                .ToList();
+
+            return data;
+        }
+
+        public CategoryViewModel RetrieveCategory(int CategoryId)
+        {
+            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId)).Select(s => new CategoryViewModel
+            {
+                CategoryId = s.CategoryId,
+                Name = s.Name,
+                Description = s.Description,
+            }).FirstOrDefault();
+
+            return category;
+        }
+
+        public void UpdateCategory(CategoryViewModel model, string userId)
+        {
+            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(model.CategoryId)).FirstOrDefault();
+            if (category != null)
+            {
+                category.Name = model.Name;
+                category.Description = model.Description;
+                category.DateUpdated = DateTime.Now;
+                category.CreatedBy = userId;
+
+                _categoryRepository.UpdateCategory(category);
+            }
+        }
+
+        public void DeleteCategory(int CategoryId)
+        {
+            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId)).FirstOrDefault();
+            if (category != null)
+            {
+                _categoryRepository.DeleteCategory(category);
+            }
         }
     }
 }
