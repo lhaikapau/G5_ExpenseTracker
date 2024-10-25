@@ -16,7 +16,7 @@ namespace ASI.Basecode.Data
             : base(options)
         {
         }
-        //first guide
+
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Expense> Expenses { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -56,6 +56,10 @@ namespace ASI.Basecode.Data
             modelBuilder.Entity<Expense>(entity =>
             {
                 entity.ToTable("Expense");
+
+                entity.Property(e => e.CreatedBy)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
 
