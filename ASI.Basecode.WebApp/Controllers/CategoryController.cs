@@ -1,12 +1,15 @@
 ﻿using ASI.Basecode.Services.Interfaces;
 using ASI.Basecode.Services.ServiceModels;
 using ASI.Basecode.WebApp.Mvc;
+using ASI.Basecode.Data;
+using ASI.Basecode.Data.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -43,6 +46,13 @@ namespace ASI.Basecode.WebApp.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult RetrieveCategoriesFromUserId()
+        {
+            var categories = _categoryService.RetrieveCategoriesFromUserId(UserId);
+            return Json(categories);
         }
 
         [HttpGet]

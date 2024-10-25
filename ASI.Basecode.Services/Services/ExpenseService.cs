@@ -25,7 +25,7 @@ namespace ASI.Basecode.Services.Services
         public void AddExpense(ExpenseViewModel model, string userId)
         {
             var newExpense = new Expense();
-            newExpense.CategoryId = null;
+            newExpense.CategoryId = model.CategoryId;
             newExpense.Title = model.Title;
             newExpense.Amount = model.Amount;
             newExpense.CreatedBy = userId;

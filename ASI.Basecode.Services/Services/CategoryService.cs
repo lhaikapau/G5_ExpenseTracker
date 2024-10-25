@@ -53,6 +53,19 @@ namespace ASI.Basecode.Services.Services
             return data;
         }
 
+        public List<CategoryViewModel> RetrieveCategoriesFromUserId(string UserId)
+        {
+            var data = _categoryRepository.RetrieveAll().Where(x => x.CreatedBy == UserId)
+                .Select(s => new CategoryViewModel
+                {
+                    CategoryId = s.CategoryId,
+                    Name = s.Name,
+                    Description = s.Description
+                }).ToList();
+
+            return data;
+        }
+
         public CategoryViewModel RetrieveCategory(int CategoryId)
         {
             var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId)).Select(s => new CategoryViewModel
