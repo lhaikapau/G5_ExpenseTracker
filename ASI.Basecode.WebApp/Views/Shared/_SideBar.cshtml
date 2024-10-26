@@ -1,0 +1,22 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@if (ViewBag.LoginView != true)  // Check if user is not logged in
+
+{
+    <div id="sidebar" class="bg-light border-right" style="width: 250px; position:fixed; height: 100vh;">
+        <div class="sidebar-heading">Dashboard</div>
+        <ul class="side_nav flex-column" style="padding: 0;">
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Category")">Category</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Expense")">Expense</a>
+            </li>
+        </ul>
+    </div>
+
+}
+

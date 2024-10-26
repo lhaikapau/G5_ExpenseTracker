@@ -1,6 +1,4 @@
-﻿/* Main CSS Here */
-
-@import url( "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+﻿@import url( "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
     margin: 0;
@@ -116,9 +114,9 @@ header {
     align-items: center;
     justify-content: center;
     position: relative;
-    cursor: pointer; 
+    cursor: pointer;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .main-container {
@@ -361,4 +359,51 @@ header {
     background-color: rgb(0, 177, 0);
     color: white;
     border-radius: 4px;
+}
+
+#sidebar {
+    background-color: #1e272e; /* Sidebar background color */
+    color: black; /* Change text color to black */
+    position: fixed; /* Fixed positioning */
+    top: 70px; /* Below header */
+    left: 0; /* Align to the left */
+    width: 250px; /* Width of the sidebar */
+    height: calc(100vh - 70px); /* Full height minus header */
+    padding: 20px 0; /* Top and bottom padding */
+    overflow-y: auto; /* Scroll if content exceeds height */
+    z-index: 99; /* Above other content */
+}
+
+.sidebar-heading {
+    font-size: 18px; /* Heading size */
+    font-weight: bold; /* Make heading bold */
+    padding: 10px 20px; /* Padding around the heading */
+    color: black; /* Heading color */
+}
+
+.side_nav {
+    list-style-type: none; /* Remove list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.nav-item {
+    margin: 0; /* Remove any margin */
+}
+
+.nav-link {
+    display: block; /* Make links fill available space */
+    padding: 10px 20px; /* Padding for links */
+    color: black; /* Change link color to black */
+    text-decoration: none; /* Remove underline */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+    .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.1); /* Hover effect with light background */
+    }
+
+.container {
+    margin-left: 250px; /* Match this to the sidebar width */
+    padding: 20px; /* Add some padding if necessary */
 }

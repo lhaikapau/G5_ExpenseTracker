@@ -10,5 +10,8 @@ namespace ASI.Basecode.Data.Interfaces
     public interface IExpenseRepository
     {
         void AddExpense(Expense model);
+        IEnumerable<Expense> RetrieveAll();
+        void UpdateExpense(Expense model);
+        void DeleteExpense(Expense model);
     }
 }

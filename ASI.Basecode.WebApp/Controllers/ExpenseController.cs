@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -32,7 +34,8 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var data = _expenseService.RetrieveAll(UserId);
+            return View(data);
         }
 
         #region Get Methods
@@ -43,6 +46,21 @@ namespace ASI.Basecode.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Edit(int ExpenseId)
+        {
+            var data = _expenseService.RetrieveExpense(ExpenseId);
+            return View(data);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int ExpenseId)
+        {
+            var data = _expenseService.RetrieveExpense(ExpenseId);
+            return View(data);
+        }
+
+
         #endregion
 
         #region Post Methods
@@ -50,9 +68,53 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Create(ExpenseViewModel model)
         {
-            _expenseService.AddExpense(model, UserId);
-            return RedirectToAction("Index", "Home");
+            try
+            {
+                _expenseService.AddExpense(model, UserId);
+                return RedirectToAction("Index");
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(model); // Return the view with validation errors
+            }
         }
+
+        [HttpPost]
+        public IActionResult Edit(ExpenseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Log the validation errors for debugging
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                return View(model); // Return the model with validation errors
+            }
+
+            try
+            {
+                _expenseService.UpdateExpense(model, UserId);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Unable to update expense. Please try again.");
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult PostDelete(int ExpenseId)
+        {
+            _expenseService.DeleteExpense(ExpenseId);
+            return RedirectToAction("Index");
+        }
+
         #endregion
     }
 }
