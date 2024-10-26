@@ -27,6 +27,7 @@ namespace ASI.Basecode.WebApp
             {
                 CreateMap<UserViewModel, User>();
                 CreateMap<CategoryViewModel, Category>();
+                CreateMap<ExpenseViewModel, Expense>();
             }
         }
     }

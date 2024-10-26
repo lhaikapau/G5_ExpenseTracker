@@ -10,5 +10,11 @@ namespace ASI.Basecode.Services.Interfaces
     public interface IExpenseService
     {
         void AddExpense(ExpenseViewModel model, string userId);
+
+        List<ExpenseViewModel> RetrieveAll(string UserId);
+        ExpenseViewModel RetrieveExpense(int ExpenseId);
+        void UpdateExpense(ExpenseViewModel model, string userId);
+
+        void DeleteExpense(int ExpenseId);
     }
 }

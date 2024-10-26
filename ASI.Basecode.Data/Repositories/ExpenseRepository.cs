@@ -18,5 +18,20 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<Expense>().Add(model);
             UnitOfWork.SaveChanges();
         }
+
+        public IEnumerable<Expense> RetrieveAll()
+        {
+            return this.GetDbSet<Expense>();
+        }
+        public void UpdateExpense(Expense model)
+        {
+            this.GetDbSet<Expense>().Update(model);
+            UnitOfWork.SaveChanges();
+        }
+        public void DeleteExpense(Expense model)
+        {
+            this.GetDbSet<Expense>().Remove(model);
+            UnitOfWork.SaveChanges();
+        }
     }
 }
