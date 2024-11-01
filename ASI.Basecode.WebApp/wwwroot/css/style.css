@@ -23,6 +23,7 @@ body {
     background-color: var(--background-color4);
     max-width: 100%;
     overflow-x: hidden;
+    margin-top: 70px;
 }
 
 header {
@@ -35,6 +36,10 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed; /* Add this line */
+    top: 0; /* Ensure it's always at the top */
+    left: 0;
+
 }
 
 .logo {
@@ -361,25 +366,84 @@ header {
     border-radius: 4px;
 }
 
+/*Side Bar*/
+
 #sidebar {
     background-color: #1e272e; /* Sidebar background color */
     color: black; /* Change text color to black */
     position: fixed; /* Fixed positioning */
     top: 70px; /* Below header */
     left: 0; /* Align to the left */
-    width: 250px; /* Width of the sidebar */
+    width: 200px; /* Width of the sidebar */
     height: calc(100vh - 70px); /* Full height minus header */
     padding: 20px 0; /* Top and bottom padding */
     overflow-y: auto; /* Scroll if content exceeds height */
     z-index: 99; /* Above other content */
 }
 
+    #sidebar.collapsed {
+        width: 80px; /* Width when minimized */
+        padding: 20px 0; /* Ensure padding remains */
+    }
+        #sidebar.collapsed .nav-link {
+            padding: 10px 0; /* Adjust padding when minimized */
+        }
+
+        #sidebar.collapsed ~ .container {
+            margin-left: 80px; /* Adjust container margin when sidebar is minimized */
+        }
+
+        #sidebar.collapsed .sidebar-heading {
+            padding: 15px 10px;
+            justify-content: center;
+        }
+
+        #sidebar.collapsed #toggleSidebar {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        #sidebar.collapsed #sidebarTitle {
+            display: none;
+        }
+
 .sidebar-heading {
-    font-size: 18px; /* Heading size */
-    font-weight: bold; /* Make heading bold */
-    padding: 10px 20px; /* Padding around the heading */
-    color: black; /* Heading color */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #f8f9fa; /* Light gray background */
+    border-bottom: 1px solid #ddd; /* Light border */
 }
+
+#sidebarTitle.title {
+    color: #343a40; /* Dark text for the title */
+    font-size: 1.1rem;
+    margin-right: auto;
+}
+
+/* Style for the toggle button */
+#toggleSidebar {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: #6c757d; /* Gray color */
+    border: 1px solid #ced4da; /* Border color */
+    border-radius: 4px;
+    background-color: #ffffff; /* White background */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    #toggleSidebar:hover {
+        color: #0056b3; /* Darker blue on hover */
+        background-color: #e2e6ea; /* Slightly darker background */
+    }
+
+    #toggleSidebar i {
+        font-size: 1.2rem;
+    }
 
 .side_nav {
     list-style-type: none; /* Remove list styling */
@@ -397,6 +461,7 @@ header {
     color: black; /* Change link color to black */
     text-decoration: none; /* Remove underline */
     transition: background-color 0.3s; /* Smooth transition */
+
 }
 
     .nav-link:hover {
@@ -404,6 +469,11 @@ header {
     }
 
 .container {
-    margin-left: 250px; /* Match this to the sidebar width */
-    padding: 20px; /* Add some padding if necessary */
+    margin-left: 200px;
+}
+
+.side_nav .nav-link {
+    display: flex; /* Use flex for alignment */
+    justify-content: center; /* Space out text and symbols */
+    align-items: center; /* Center vertically */
 }
