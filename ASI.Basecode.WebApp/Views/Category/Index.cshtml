@@ -33,12 +33,13 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { CategoryId = item.CategoryId}, new { @class = "btn btn-sm btn-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { CategoryId = item.CategoryId}, new { @class = "btn btn-sm btn-danger" })
+
+                    @Html.ActionLink("Edit", "Edit", new { CategoryId = item.CategoryId }, new { @class = "btn btn-sm btn-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { CategoryId = item.CategoryId }, new { @class = "btn btn-sm btn-danger" })
+
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
 

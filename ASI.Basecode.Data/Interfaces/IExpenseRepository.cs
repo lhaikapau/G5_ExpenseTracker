@@ -13,5 +13,6 @@ namespace ASI.Basecode.Data.Interfaces
         IEnumerable<Expense> RetrieveAll();
         void UpdateExpense(Expense model);
         void DeleteExpense(Expense model);
+
     }
 }

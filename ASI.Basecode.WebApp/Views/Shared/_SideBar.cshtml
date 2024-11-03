@@ -1,38 +1,38 @@
-﻿@using Microsoft.AspNetCore.Http
+﻿﻿@using Microsoft.AspNetCore.Http
 
 @if (ViewBag.LoginView != true)  // Check if user is not logged in
 {
-        <div id="sidebar" class="bg-light border-right">
-            <div class="sidebar-heading">
-                <span id="sidebarTitle" class="title">Dashboard</span>
-                <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary ">
-                    <i class="fas fa-angle-left"></i> <!-- Left arrow icon -->
-                </button>
-            </div>
-            <ul class="side_nav flex-column" style="padding: 0;">
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Home")">
-                        <span class="full-text">Home</span> 
-                        <span class="collapsed-text" style="display: none;">🏠</span> <!-- Home symbol -->
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Category")">
-                        <span class="full-text">Category</span>
-                        <span class="collapsed-text" style="display: none;">📂</span> <!-- Category symbol -->
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Expense")">
-                        <span class="full-text">Expense</span>
-                        <span class="collapsed-text" style="display: none;">💰</span> <!-- Expense symbol -->
-                    </a>
-                </li>
-            </ul>
+    <div id="sidebar" class="bg-light border-right">
+        <div class="sidebar-heading">
+            <span id="sidebarTitle" class="title">Dashboard</span>
+            <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary ">
+                <i class="fas fa-angle-left"></i> <!-- Left arrow icon -->
+            </button>
         </div>
+        <ul class="side_nav flex-column" style="padding: 0;">
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Home")">
+                    <span class="full-text">Home</span>
+                    <span class="collapsed-text" style="display: none;">🏠</span> <!-- Home symbol -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Category")">
+                    <span class="full-text">Category</span>
+                    <span class="collapsed-text" style="display: none;">📂</span> <!-- Category symbol -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "Expense")">
+                    <span class="full-text">Expense</span>
+                    <span class="collapsed-text" style="display: none;">💰</span> <!-- Expense symbol -->
+                </a>
+            </li>
+        </ul>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
             var sidebar = document.getElementById("sidebar");
             var container = document.querySelector(".container");
 
@@ -66,9 +66,10 @@
 
                 // Toggle visibility of full text and collapsed text
                 var navLinks = sidebar.querySelectorAll(".nav-link");
-                navLinks.forEach(function(link) {
+                navLinks.forEach(function (link) {
                     var fullText = link.querySelector(".full-text");
                     var collapsedText = link.querySelector(".collapsed-text");
+
 
                     if (collapsed) {
                         fullText.style.display = "none";
@@ -82,3 +83,4 @@
         });
     </script>
 }
+

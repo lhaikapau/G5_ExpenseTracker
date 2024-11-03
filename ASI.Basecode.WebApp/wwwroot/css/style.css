@@ -39,7 +39,6 @@ header {
     position: fixed; /* Add this line */
     top: 0; /* Ensure it's always at the top */
     left: 0;
-
 }
 
 .logo {
@@ -435,6 +434,7 @@ header {
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
+
 
     #toggleSidebar:hover {
         color: #0056b3; /* Darker blue on hover */

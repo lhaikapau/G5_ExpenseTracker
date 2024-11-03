@@ -112,7 +112,7 @@ namespace ASI.Basecode.WebApp.Controllers
         public IActionResult PostDelete(int ExpenseId)
         {
             _expenseService.DeleteExpense(ExpenseId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
 
         #endregion

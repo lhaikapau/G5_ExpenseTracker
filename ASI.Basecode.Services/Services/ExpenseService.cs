@@ -43,7 +43,7 @@ namespace ASI.Basecode.Services.Services
             newExpense.Title = model.Title;
             newExpense.Amount = model.Amount;
             newExpense.CreatedBy = userId;
-            newExpense.DateCreated = DateTime.Now; 
+            newExpense.DateCreated = model.DateCreated.Value; 
             newExpense.DateUpdated = DateTime.Now;
             newExpense.Description = model.Description;
             _expenseRepository.AddExpense(newExpense);
@@ -63,6 +63,7 @@ namespace ASI.Basecode.Services.Services
                     Description = s.Description,
                     Amount = s.Amount,
                     CategoryId = s.CategoryId,
+                    DateCreated = s.DateCreated,
                     Name = s.CategoryId.HasValue && categories.ContainsKey(s.CategoryId.Value)
                         ? categories[s.CategoryId.Value]
                         : "Unknown"  // Display "Unknown" if the category doesn't exist
@@ -82,10 +83,12 @@ namespace ASI.Basecode.Services.Services
                 Description = s.Description,
                 Amount = s.Amount,
                 CategoryId = s.CategoryId,
+                DateCreated = s.DateCreated,
                 Name = s.CategoryId.HasValue
                    ? _categoryRepository.RetrieveAll()
                        .FirstOrDefault(c => c.CategoryId == s.CategoryId)?.Name
                    : "Unknown"
+
             }).FirstOrDefault();
 
             return expense;
@@ -107,7 +110,10 @@ namespace ASI.Basecode.Services.Services
                     expense.Amount = model.Amount;
                     expense.CategoryId = model.CategoryId;
                     expense.DateUpdated = DateTime.Now;
-                    
+                    if (model.DateCreated.HasValue)  // Update if a date is provided
+                    {
+                        expense.DateCreated = model.DateCreated.Value;
+                    }
 
                     _expenseRepository.UpdateExpense(expense);
                 } 
