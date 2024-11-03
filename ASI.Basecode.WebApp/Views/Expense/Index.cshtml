@@ -7,11 +7,11 @@
 <h1>Expense</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 
-<table class="table">
-    <thead>
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -21,34 +21,34 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
-            </th>         
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)  // Assuming Categories is a list in the CategoryViewModel
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>
+                <tr>
+                    <td>
                     @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { ExpenseId = item.ExpenseId }) |
-                    @Html.ActionLink("Delete", "Delete", new { ExpenseId = item.ExpenseId }) |
-                </td>
-            </tr>
+                    </td>
+                    <td class="text-center">
+                    @Html.ActionLink("Edit", "Edit", new { ExpenseId = item.ExpenseId }, new { @class = "btn btn-sm btn-warning" }) |
+                    @Html.ActionLink("Delete", "Delete", new { ExpenseId = item.ExpenseId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
