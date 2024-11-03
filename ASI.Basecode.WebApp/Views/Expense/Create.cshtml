@@ -27,14 +27,16 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="DateCreated" class="control-label"></label>
+                <input asp-for="DateCreated" class="form-control" type="date" /> <!-- Date Picker -->
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <div class="input-group">
-                    <input asp-for="CategoryId" class="form-control" hidden />
-                    <input id="lblCategory" class="form-control" readonly />
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary" onclick="selectCategory()">Select</button>
-                    </div>
-                </div>
+                <select asp-for="CategoryId" class="form-control" id="categoryDropdown">
+                    <option value="">-- Select Category --</option>
+                    <!-- Options will be populated here dynamically -->
+                </select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,53 +50,11 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-<!-- Category Selection Modal -->
-<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="categoryModalLabel">Select a Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Category Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="categoryTableBody">
-                        <!-- Categories will be dynamically loaded here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-      
-        function selectCategory(){
-            $('#categoryModal').modal('show');
-        }
-
-
-        function selectCategoryId(id, name) {
-            // Set the selected category ID in the input field
-            $('#CategoryId').val(id);
-            $('#lblCategory').val(name);
-            // Close the modal
-            $('#categoryModal').modal('hide');
-        }
-
         $(document).ready(function () {
             const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
             fetch(apiUrl)
@@ -105,17 +65,10 @@
                     return response.json();
                 })
                 .then(data => {
-                    var categoryTableBody = $('#categoryTableBody');
-                    categoryTableBody.empty();
+                    const categoryDropdown = $('#categoryDropdown');
                     data.forEach(category => {
-                        const row = $('<tr></tr>');
-                        const idCell = $('<td></td>').text(category.name);
-                        const nameCell = $('<td></td>').html(`<button type="button" class="btn btn-primary" onclick="selectCategoryId(${category.categoryId}, '${category.name}')">Select</button>`);
-
-                        row.append(idCell);
-                        row.append(nameCell);
-
-                        categoryTableBody.append(row);
+                        const option = $('<option></option>').val(category.categoryId).text(category.name);
+                        categoryDropdown.append(option);
                     });
                 })
                 .catch(error => {
