@@ -16,5 +16,6 @@ namespace ASI.Basecode.Services.Interfaces
         void UpdateExpense(ExpenseViewModel model, string userId);
 
         void DeleteExpense(int ExpenseId);
+        List<ExpenseViewModel> RetrieveByMonth(string userId, int year, int month);
     }
 }

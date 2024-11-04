@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Drawing;
 using System.Linq;
 using System.Text.Json;
 
@@ -37,7 +39,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Returns Home View.
         /// </summary>
         /// <returns> Home View </returns>
-        public IActionResult Index()
+        public IActionResult Index(int? year, int? month)
         {
             var totalAmount = _expenseService.RetrieveAll(UserId).Sum(exp => exp.Amount ?? 0);
             ViewData["TotalAmount"] = totalAmount; // Pass the total amount to the view
@@ -55,11 +57,34 @@ namespace ASI.Basecode.WebApp.Controllers
 
             ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
 
+            // Handle Monthly Report logic
+            year = year ?? DateTime.Now.Year;
+            month = month ?? DateTime.Now.Month;
 
+            var monthlyExpenses = _expenseService.RetrieveByMonth(UserId, year.Value, month.Value);
+            var monthlyTotalAmount = monthlyExpenses.Sum(exp => exp.Amount ?? 0);
+
+            ViewData["MonthlyTotalAmount"] = monthlyTotalAmount;
+            ViewData["CurrentYear"] = year;
+            ViewData["CurrentMonth"] = month;
+
+            var monthlyCategoryData = monthlyExpenses
+                .GroupBy(e => e.Name)
+                .Select(g => new
+                {
+                    name = g.Key,
+                    amount = g.Sum(e => e.Amount ?? 0)
+                })
+                .OrderByDescending(x => x.amount)
+                .ToList();
+
+            ViewData["MonthlyCategoryData"] = JsonSerializer.Serialize(monthlyCategoryData);
 
             return View();
 
         }
+
+       
 
     }
 }
