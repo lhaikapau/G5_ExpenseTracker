@@ -35,37 +35,7 @@
                 <div class="alert alert-info">No expense data available to display.</div>
             }
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Monthly Expenses by Category</h5>
-                    <div class="d-flex justify-content-end">
-                        <select id="monthSelect" class="form-select me-2" style="width: auto;">
-                            @for (int m = 1; m <= 12; m++)
-                            {
-                                var isSelected = m == (int?)ViewData["CurrentMonth"];
-                                <option value="@m" selected="@isSelected">
-                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
-                                </option>
-                            }
-                        </select>
-                        <select id="yearSelect" class="form-select" style="width: auto;">
-                            @for (int y = DateTime.Now.Year; y >= 2000; y--)
-                            {
-                                var isSelected = y == (int?)ViewData["CurrentYear"];
-                                <option value="@y" selected="@isSelected">
-                                    @y
-                                </option>
-                            }
-                        </select>
-                        <button id="filterButton" class="btn btn-primary ms-2">Filter</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="barChart" style="height: 300px;"></canvas>
-                </div>
-            </div>
-        </div>
+        
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -88,7 +58,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         try {
             var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
-            var monthlyCategoryData = JSON.parse('@Html.Raw(ViewData["MonthlyCategoryData"])');
+           
 
             if (!categoryData || categoryData.length === 0) {
                 console.log('No data available for chart');
@@ -157,45 +127,7 @@
                 categoryList.appendChild(listItem);
             });
 
-            // Monthly Bar Chart
-            if (monthlyCategoryData && monthlyCategoryData.length > 0) {
-                var barLabels = monthlyCategoryData.map(item => item.name);
-                var barDataValues = monthlyCategoryData.map(item => item.amount);
-                var barColors = generateColors(monthlyCategoryData.length);
-
-                var barCtx = document.getElementById('barChart').getContext('2d');
-                new Chart(barCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: barLabels,
-                        datasets: [{
-                            label: 'Monthly Expenses',
-                            data: barDataValues,
-                            backgroundColor: barColors.map(color => `rgba(${color}, 0.2)`),
-                            borderColor: barColors.map(color => `rgba(${color}, 1)`),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: { y: { beginAtZero: true } },
-                        plugins: {
-                            legend: { display: true },
-                            title: { display: true, text: 'Monthly Expenses by Category' }
-                        }
-                    }
-                });
-            } else {
-                console.log('No data available for monthly chart');
-            }
-
-            // Filter button functionality
-            document.getElementById('filterButton').addEventListener('click', function () {
-                var selectedYear = document.getElementById('yearSelect').value;
-                var selectedMonth = document.getElementById('monthSelect').value;
-                // Redirect to the same page with selected year and month
-                window.location.href = `?year=${selectedYear}&month=${selectedMonth}`;
-            });
+            
 
         } catch (error) {
             console.error('Error creating chart:', error);
