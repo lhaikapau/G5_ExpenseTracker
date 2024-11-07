@@ -136,5 +136,30 @@ namespace ASI.Basecode.Services.Services
             }
         }
 
+        public List<ExpenseViewModel> RetrieveByMonth(string userId, int year, int month)
+        {
+            var categories = _categoryRepository.RetrieveAll().ToDictionary(c => c.CategoryId, c => c.Name);
+
+            return _expenseRepository
+                .RetrieveAll()
+                .Where(c => c.CreatedBy == userId &&
+                          c.DateCreated.HasValue &&
+                          c.DateCreated.Value.Year == year &&
+                          c.DateCreated.Value.Month == month)
+                .Select(s => new ExpenseViewModel
+                {
+                    ExpenseId = s.ExpenseId,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Amount = s.Amount,
+                    CategoryId = s.CategoryId,
+                    DateCreated = s.DateCreated,
+                    Name = s.CategoryId.HasValue && categories.ContainsKey(s.CategoryId.Value)
+                        ? categories[s.CategoryId.Value]
+                        : "Unknown"
+                })
+                .ToList();
+        }
+
     }
 }
