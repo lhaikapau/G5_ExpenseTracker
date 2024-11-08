@@ -9,7 +9,7 @@
         <hr />
         <div class="row">
             <div class="col">
-                <form asp-action="Create" enctype="multipart/form-data">
+                <form asp-action="Edit" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="CategoryId" />
                     <div class="form-group mb-3">
@@ -23,7 +23,7 @@
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="text-center">
-                        <input type="submit" value="Create" class="btn btn-primary w-100" />
+                        <input type="submit" value="Edit" class="btn btn-primary w-100" />
                     </div>
                 </form>
             </div>
