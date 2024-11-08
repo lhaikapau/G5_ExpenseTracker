@@ -4,12 +4,11 @@
     justify-content: center; /* Vertically center the content */
     align-items: center; /* Horizontally center the content */
     position: relative;
-    margin: 50px;
-    width: 80%;
-
+    margin: 40px;
 }
 hr {
     width: 100%; /* Makes the line 50% of the container width */
+
     height: 2px; /* Sets the line thickness */
     background-color: #333; /* Dark line color */
     margin-top: 10px;

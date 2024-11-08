@@ -3,13 +3,13 @@
     background-color: #1e272e; /* Sidebar background color */
     color: black; /* Change text color to black */
     position: fixed; /* Fixed positioning */
-    top: 70px; /* Below header */
     left: 0; /* Align to the left */
     width: 200px; /* Width of the sidebar */
-    height: calc(100vh - 70px); /* Full height minus header */
+    height: 100vh; /* Full height minus header */
     padding: 20px 0; /* Top and bottom padding */
     overflow-y: auto; /* Scroll if content exceeds height */
     z-index: 99; /* Above other content */
+    transition: width 0.3s ease, padding 0.3s ease;
 }
 
     #sidebar.collapsed {
@@ -21,9 +21,6 @@
             padding: 10px 0; /* Adjust padding when minimized */
         }
 
-        #sidebar.collapsed ~ .container {
-            margin-left: 80px; /* Adjust container margin when sidebar is minimized */
-        }
 
         #sidebar.collapsed .sidebar-heading {
             padding: 15px 10px;
