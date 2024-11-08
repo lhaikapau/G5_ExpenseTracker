@@ -39,6 +39,7 @@ namespace ASI.Basecode.WebApp.Controllers
             var totalAmount = _expenseService.RetrieveAll(UserId).Sum(exp => exp.Amount ?? 0);
             ViewData["TotalAmount"] = totalAmount;
 
+
             var categoryData = _expenseService.RetrieveAll(UserId)
                 .GroupBy(e => e.Name)
                 .Select(g => new

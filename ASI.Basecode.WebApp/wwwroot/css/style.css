@@ -406,6 +406,10 @@ header {
             display: none;
         }
 
+    #sidebar:not(.collapsed) .nav-link[title]::after {
+        display: none;
+    }
+
 .sidebar-heading {
     display: flex;
     align-items: center;
@@ -451,31 +455,29 @@ header {
     margin: 0; /* Remove default margin */
 }
 
-.nav-item {
-    margin: 0; /* Remove any margin */
-}
-
-.nav-link {
-    display: block; /* Make links fill available space */
-    padding: 10px 20px; /* Padding for links */
-    color: black; /* Change link color to black */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s; /* Smooth transition */
-
-}
-
-    .nav-link:hover {
-        background-color: rgba(0, 0, 0, 0.1); /* Hover effect with light background */
+    .side_nav .nav-link {
+        display: flex;
+        justify-content: flex-start; /* Default alignment for expanded */
+        align-items: center;
+        padding: 10px 20px;
+        color: black;
+        text-decoration: none;
+        transition: background-color 0.3s;
     }
+
+    .side_nav.collapsed .nav-link {
+        justify-content: center; /* Center when collapsed */
+    }
+
+.nav-item {
+    margin: 10px 0; /* Remove any margin */
+}
+
+.nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Hover effect with light background */
+
+}
 
 .container {
     margin-left: 200px;
 }
-
-.side_nav .nav-link {
-    display: flex; /* Use flex for alignment */
-    justify-content: center; /* Space out text and symbols */
-    align-items: center; /* Center vertically */
-}
-
-
