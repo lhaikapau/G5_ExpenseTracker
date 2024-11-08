@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
     <div class="create-container">
         <div class="create-card">
         <h1>Create Expense</h1>
@@ -58,29 +57,33 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        $(document).ready(function () {
-            const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const categoryDropdown = $('#categoryDropdown');
-                    data.forEach(category => {
-                        const option = $('<option></option>')
-                            .val(category.categoryId)
-                            .text(category.name);
-
-                        // Select the current category if it matches Model.CategoryId
-                        if (category.categoryId == '@Model.CategoryId') {
-                            option.attr("selected", "selected");
+        <script>
+            $(document).ready(function () {
+                const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
                         }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const categoryDropdown = $('#categoryDropdown');
+                        data.forEach(category => {
+                            const option = $('<option></option>')
+                                .val(category.categoryId)
+                                .text(category.name);
 
-                        categoryDropdown.append(option);
+                            // Select the current category if it matches Model.CategoryId
+                            if (category.categoryId == '@Model.CategoryId') {
+                                option.attr("selected", "selected");
+                            }
+
+                            categoryDropdown.append(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching categories:', error);
                     });
                 })
                 .catch(error => {
@@ -89,3 +92,4 @@
         });
     </script>
 }
+
