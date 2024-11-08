@@ -384,7 +384,6 @@ header {
         width: 80px; /* Width when minimized */
         padding: 20px 0; /* Ensure padding remains */
     }
-
         #sidebar.collapsed .nav-link {
             padding: 10px 0; /* Adjust padding when minimized */
         }
@@ -440,6 +439,7 @@ header {
     transition: background-color 0.3s, color 0.3s;
 }
 
+
     #toggleSidebar:hover {
         color: #0056b3; /* Darker blue on hover */
         background-color: #e2e6ea; /* Slightly darker background */
@@ -475,6 +475,7 @@ header {
 
 .nav-link:hover {
     background-color: rgba(0, 0, 0, 0.1); /* Hover effect with light background */
+
 }
 
 .container {
