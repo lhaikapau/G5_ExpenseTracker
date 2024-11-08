@@ -49,32 +49,33 @@
     <div>
          <a asp-action="Index" class="btn btn-primary">Back</a>
     </div>
-</div>
-</div>
+</div>  
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script>
-        $(document).ready(function () {
-            const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const categoryDropdown = $('#categoryDropdown');
-                    data.forEach(category => {
-                        const option = $('<option></option>').val(category.categoryId).text(category.name);
-                        categoryDropdown.append(option);
+
+       <script>
+            $(document).ready(function () {
+                const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
+                fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const categoryDropdown = $('#categoryDropdown');
+                        data.forEach(category => {
+                            const option = $('<option></option>').val(category.categoryId).text(category.name);
+                            categoryDropdown.append(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching categories:', error);
                     });
-                })
-                .catch(error => {
-                    console.error('Error fetching categories:', error);
-                });
-        });
-    </script>
+            });
+        </script>
 }
