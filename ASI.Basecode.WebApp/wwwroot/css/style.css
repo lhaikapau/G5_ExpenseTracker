@@ -366,4 +366,5 @@ header {
     max-height: 100%;
     position: relative;
     justify-content: center;
+    transition: margin-left 0.3s ease;
 }
