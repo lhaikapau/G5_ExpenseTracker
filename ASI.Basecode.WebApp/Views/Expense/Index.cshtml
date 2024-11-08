@@ -3,15 +3,14 @@
 @{
     ViewData["Title"] = "Expense Page";
 }
-
+<div class="page-container">
 <h1>Expense</h1>
-
+<hr />
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <table class="table table-striped table-hover">
-<thead class="thead-dark">
-    <thead>
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
@@ -66,3 +65,4 @@
         }
     </tbody>
 </table>
+</div>
