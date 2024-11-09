@@ -1,10 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
-<div class="container">
+<div class="page-container">
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+    </div>
     <div class="row">
         <div class="col-md-4">
             <div class="d-flex flex-row widget summary expense border rounded p-4 bg-light" style="background-color: #e9ecef;">
@@ -14,10 +14,13 @@
                 <div class="d-flex flex-column m-auto">
                     <span class="lead">Total Expense</span>
                     <h1 class="display-6 fw-bold">₱@ViewData["TotalAmount"]</h1>
+                    <span class="lead">Average Monthly Expense</span>
+                    <h1 class="display-6 fw-bold">₱@ViewData["AverageMonthlyExpense"]</h1>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="row mt-4">
         <!-- Chart Column -->
@@ -35,7 +38,7 @@
                 <div class="alert alert-info">No expense data available to display.</div>
             }
         </div>
-        
+
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
@@ -58,7 +61,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         try {
             var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
-           
+
 
             if (!categoryData || categoryData.length === 0) {
                 console.log('No data available for chart');
@@ -117,17 +120,17 @@
                 listItem.style.borderLeft = `4px solid ${borderColor}`;
 
                 listItem.innerHTML = `
-                        <div>
-                            <h6 class="mb-0">${category.name}</h6>
-                            <small class="text-muted">₱${category.amount.toLocaleString()}</small>
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
-                    `;
+                            <div>
+                                <h6 class="mb-0">${category.name}</h6>
+                                <small class="text-muted">₱${category.amount.toLocaleString()}</small>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
+                        `;
 
                 categoryList.appendChild(listItem);
             });
 
-            
+
 
         } catch (error) {
             console.error('Error creating chart:', error);

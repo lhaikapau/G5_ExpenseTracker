@@ -1,238 +1,109 @@
 ﻿@{
     ViewData["Title"] = "Report Page";
 }
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-</div>
-<div class="container">
-    <!-- Monthly Report Section -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Monthly Expenses</h5>
-                    <div class="d-flex justify-content-end">
-                        <select id="singleMonthSelect" class="form-select me-2" style="width: auto;">
-                            @for (int m = 1; m <= 12; m++)
-                            {
-                                var isSelected = m == (int?)ViewData["CurrentMonth"];
-                                <option value="@m" selected="@isSelected">
-                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
-                                </option>
-                            }
-                        </select>
-                        <select id="singleYearSelect" class="form-select" style="width: auto;">
-                            @for (int y = DateTime.Now.Year; y >= 2000; y--)
-                            {
-                                var isSelected = y == (int?)ViewData["CurrentYear"];
-                                <option value="@y" selected="@isSelected">@y</option>
-                            }
-                        </select>
-                        <button id="singleMonthFilterButton" class="btn btn-primary ms-2">Filter</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="barChart" style="height: 300px;"></canvas>
-                </div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2 class="mb-4">Expense Analysis Dashboard</h2>
+
+            <div class="d-grid gap-4">
+                <!-- Monthly Graph Form -->
+                <form asp-action="Trend" method="get">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-line me-2" viewBox="0 0 16 16">
+                                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+                            </svg>
+                            <span>Trend Expenses Graph</span>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Monthly Comparison Graph Form -->
+                <form asp-action="MonthVsMonth" method="get">
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-graph-up-arrow me-2" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+                            </svg>
+                            <span>Month-to-Month Comparison</span>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Category Breakdown Form -->
+                <form asp-action="Breakdown" method="get">
+                    <button type="submit" class="btn btn-info btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pie-chart-fill me-2" viewBox="0 0 16 16">
+                                <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778l-5.5 5.5zM8.5.015V7.5h7.485A8.001 8.001 0 0 0 8.5.015z" />
+                            </svg>
+                            <span>Category Expenses Breakdown</span>
+                        </div>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- Month Comparison Section -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Month-to-Month Comparison</h5>
-                    <div class="d-flex justify-content-end">
-                        <select id="monthSelect" class="form-select me-2" style="width: auto;">
-                            @for (int m = 1; m <= 12; m++)
-                            {
-                                var isSelected = m == (int?)ViewData["CurrentMonth"];
-                                <option value="@m" selected="@isSelected">
-                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
-                                </option>
-                            }
-                        </select>
-                        <select id="compareMonthSelect" class="form-select me-2" style="width: auto;">
-                            @for (int m = 1; m <= 12; m++)
-                            {
-                                var isSelected = m == (int?)ViewData["CompareMonth"];
-                                <option value="@m" selected="@isSelected">
-                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
-                                </option>
-                            }
-                        </select>
-                        <select id="yearSelect" class="form-select" style="width: auto;">
-                            @for (int y = DateTime.Now.Year; y >= 2000; y--)
-                            {
-                                var isSelected = y == (int?)ViewData["CurrentYear"];
-                                <option value="@y" selected="@isSelected">@y</option>
-                            }
-                        </select>
-                        <button id="compareButton" class="btn btn-primary ms-2">Compare</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <canvas id="comparisonChart" style="height: 300px;"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Category Breakdown</h5>
-                </div>
-                <div class="card-body">
-                    <div id="categoryList" class="list-group">
-                        <!-- Categories will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
-     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Add this script section at the bottom of your view -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        try {
-            var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
-            var monthlyCategoryData = JSON.parse('@Html.Raw(ViewData["MonthlyCategoryData"])');
-            var comparisonData = JSON.parse('@Html.Raw(ViewData["ComparisonData"])');
-            var labels = categoryData.map(item => item.name);
-            var dataValues = categoryData.map(item => item.amount);
-            var colors = generateColors(categoryData.length);
+        const buttons = document.querySelectorAll('.btn');
 
-            // Monthly Bar Chart
-            if (monthlyCategoryData && monthlyCategoryData.length > 0) {
-                var barLabels = monthlyCategoryData.map(item => item.name);
-                var barDataValues = monthlyCategoryData.map(item => item.amount);
-                var barColors = generateColors(monthlyCategoryData.length);
-
-                var barCtx = document.getElementById('barChart').getContext('2d');
-                new Chart(barCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: barLabels,
-                        datasets: [{
-                            label: 'Monthly Expenses',
-                            data: barDataValues,
-                            backgroundColor: barColors.map(color => `rgba(${color}, 0.2)`),
-                            borderColor: barColors.map(color => `rgba(${color}, 1)`),
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: { y: { beginAtZero: true } },
-                        plugins: {
-                            legend: { display: true },
-                            title: { display: true, text: 'Monthly Expenses by Category' }
-                        }
-                    }
-                });
-            }
-            
-            // Comparison Chart
-            if (comparisonData && comparisonData.length > 0) {
-                var comparisonLabels = comparisonData.map(item => item.name);
-                var currentMonthData = comparisonData.map(item => item.currentAmount);
-                var compareMonthData = comparisonData.map(item => item.compareAmount);
-                
-                var comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
-                new Chart(comparisonCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: comparisonLabels,
-                        datasets: [
-                            {
-                                label: document.getElementById('monthSelect').options[document.getElementById('monthSelect').selectedIndex].text,
-                                data: currentMonthData,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: document.getElementById('compareMonthSelect').options[document.getElementById('compareMonthSelect').selectedIndex].text,
-                                data: compareMonthData,
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                borderWidth: 1
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: { beginAtZero: true }
-                        },
-                        plugins: {
-                            legend: { display: true },
-                            title: { 
-                                display: true, 
-                                text: 'Month-to-Month Expense Comparison by Category'
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Single Month Filter Button
-            document.getElementById('singleMonthFilterButton').addEventListener('click', function () {
-                var selectedYear = document.getElementById('singleYearSelect').value;
-                var selectedMonth = document.getElementById('singleMonthSelect').value;
-                window.location.href = `?year=${selectedYear}&month=${selectedMonth}`;
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+                this.style.transition = 'transform 0.2s';
             });
 
-            // Comparison Filter Button
-            document.getElementById('compareButton').addEventListener('click', function () {
-                var selectedYear = document.getElementById('yearSelect').value;
-                var selectedMonth = document.getElementById('monthSelect').value;
-                var compareMonth = document.getElementById('compareMonthSelect').value;
-                window.location.href = `?year=${selectedYear}&month=${selectedMonth}&compareMonth=${compareMonth}`;
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
             });
-
-            // Populate category list
-            var categoryList = document.getElementById('categoryList');
-            categoryData.forEach((category, index) => {
-                var color = `rgba(${colors[index]}, 0.2)`;
-                var borderColor = `rgba(${colors[index]}, 1)`;
-
-                var listItem = document.createElement('div');
-                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                listItem.style.borderLeft = `4px solid ${borderColor}`;
-
-                listItem.innerHTML = `
-                        <div>
-                            <h6 class="mb-0">${category.name}</h6>
-                            <small class="text-muted">₱${category.amount.toLocaleString()}</small>
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
-                    `;
-
-                categoryList.appendChild(listItem);
-            });
-
-        } catch (error) {
-            console.error('Error creating charts:', error);
-        }
+        });
     });
+</script>
 
-    function generateColors(count) {
-        var colors = [
-            '255, 99, 132',
-            '54, 162, 235',
-            '255, 206, 86',
-            '75, 192, 192',
-            '153, 102, 255',
-            '255, 159, 64'
-        ];
+<!-- Add these styles to your view -->
+<style>
+    .btn-lg {
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        while (colors.length < count) {
-            colors.push(`${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`);
+        .btn-lg:hover {
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
 
-        return colors;
+    .btn-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
     }
-</script>
+
+    .btn-success {
+        background-color: #2ec4b6;
+        border-color: #2ec4b6;
+    }
+
+    .btn-info {
+        background-color: #ff9f1c;
+        border-color: #ff9f1c;
+        color: white;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    h2 {
+        color: #2b2d42;
+        font-weight: 600;
+    }
+
+    form {
+        margin: 0;
+    }
+</style>

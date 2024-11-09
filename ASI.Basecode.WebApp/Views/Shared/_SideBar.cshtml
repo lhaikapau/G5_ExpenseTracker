@@ -39,11 +39,11 @@
     </div>
 
     <script>
+
         document.addEventListener("DOMContentLoaded", function () {
             var sidebar = document.getElementById("sidebar");
             var sideNav = document.querySelector(".side_nav");
             var container = document.querySelector(".container");
-
             // Check local storage for the sidebar state on page load
             var isCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
             if (isCollapsed) {
@@ -80,6 +80,7 @@
                 navLinks.forEach(function (link) {
                     var fullText = link.querySelector(".full-text");
                     var collapsedText = link.querySelector(".collapsed-text");
+
 
                     if (collapsed) {
                         fullText.style.display = "none";
