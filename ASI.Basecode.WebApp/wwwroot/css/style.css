@@ -22,8 +22,10 @@
 body {
     background-color: var(--background-color4);
     max-width: 100%;
+    height: 100%;
     overflow-x: hidden;
     margin-top: 70px;
+    display: flex;
 }
 
 header {
@@ -123,21 +125,15 @@ header {
     overflow: hidden;
 }
 
-.main-container {
-    display: flex;
-    width: 100vw;
-    position: relative;
-    top: 70px;
-    z-index: 1;
-}
 
 .dpicn {
     height: 42px;
 }
 
 .main {
-    height: calc(100vh - 70px);
-    width: 100%;
+    height: calc(100vh - 80px);
+    max-width: 100%;
+    max-height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 40px 30px 30px 30px;
@@ -169,7 +165,7 @@ header {
     background-color: #1e272e;
     position: absolute;
     top: 0px;
-    left: 00;
+    left: 0;
     box-shadow: 1px 1px 10px rgba(198, 189, 248, 0.825);
     display: flex;
     justify-content: space-between;
@@ -365,118 +361,10 @@ header {
     border-radius: 4px;
 }
 
-/*Side Bar*/
-
-#sidebar {
-    background-color: #1e272e; /* Sidebar background color */
-    color: black; /* Change text color to black */
-    position: fixed; /* Fixed positioning */
-    top: 70px; /* Below header */
-    left: 0; /* Align to the left */
-    width: 200px; /* Width of the sidebar */
-    height: calc(100vh - 70px); /* Full height minus header */
-    padding: 20px 0; /* Top and bottom padding */
-    overflow-y: auto; /* Scroll if content exceeds height */
-    z-index: 99; /* Above other content */
-}
-
-    #sidebar.collapsed {
-        width: 80px; /* Width when minimized */
-        padding: 20px 0; /* Ensure padding remains */
-    }
-
-        #sidebar.collapsed .nav-link {
-            padding: 10px 0; /* Adjust padding when minimized */
-        }
-
-        #sidebar.collapsed ~ .container {
-            margin-left: 80px; /* Adjust container margin when sidebar is minimized */
-        }
-
-        #sidebar.collapsed .sidebar-heading {
-            padding: 15px 10px;
-            justify-content: center;
-        }
-
-        #sidebar.collapsed #toggleSidebar {
-            width: 100%;
-            margin-left: 0;
-        }
-
-        #sidebar.collapsed #sidebarTitle {
-            display: none;
-        }
-
-    #sidebar:not(.collapsed) .nav-link[title]::after {
-        display: none;
-    }
-
-.sidebar-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    background-color: #f8f9fa; /* Light gray background */
-    border-bottom: 1px solid #ddd; /* Light border */
-}
-
-#sidebarTitle.title {
-    color: #343a40; /* Dark text for the title */
-    font-size: 1.1rem;
-    margin-right: auto;
-}
-
-/* Style for the toggle button */
-#toggleSidebar {
-    padding: 5px 10px;
-    font-size: 0.9rem;
-    color: #6c757d; /* Gray color */
-    border: 1px solid #ced4da; /* Border color */
-    border-radius: 4px;
-    background-color: #ffffff; /* White background */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-    #toggleSidebar:hover {
-        color: #0056b3; /* Darker blue on hover */
-        background-color: #e2e6ea; /* Slightly darker background */
-    }
-
-    #toggleSidebar i {
-        font-size: 1.2rem;
-    }
-
-.side_nav {
-    list-style-type: none; /* Remove list styling */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
-}
-
-    .side_nav .nav-link {
-        display: flex;
-        justify-content: flex-start; /* Default alignment for expanded */
-        align-items: center;
-        padding: 10px 20px;
-        color: black;
-        text-decoration: none;
-        transition: background-color 0.3s;
-    }
-
-    .side_nav.collapsed .nav-link {
-        justify-content: center; /* Center when collapsed */
-    }
-
-.nav-item {
-    margin: 10px 0; /* Remove any margin */
-}
-
-.nav-link:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Hover effect with light background */
-}
-
 .container {
-    margin-left: 200px;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    justify-content: center;
+    transition: margin-left 0.3s ease;
 }
