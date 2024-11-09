@@ -382,7 +382,6 @@ header {
         width: 80px; /* Width when minimized */
         padding: 20px 0; /* Ensure padding remains */
     }
-
         #sidebar.collapsed .nav-link {
             padding: 10px 0; /* Adjust padding when minimized */
         }
@@ -418,6 +417,7 @@ header {
 
 #sidebarTitle.title {
     color: #343a40;
+
     font-size: 1.1rem;
     margin-right: auto;
 }
@@ -475,6 +475,7 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 /* Global Styles */
 /* Login Container */
 /* Register Container */
@@ -721,9 +722,10 @@ body {
     text-decoration: none;
 }
 
-    .register-link:hover {
+.register-link:hover {
         text-decoration: underline;
-    }
+
+}
 
 /* Login UI - Image Section */
 .login-image {
@@ -787,3 +789,4 @@ body {
     animation-delay: 2s;
     z-index: 10;
 }
+

@@ -53,7 +53,6 @@ hr {
         .create-container .btn:hover {
             background-color: #0056b3; /* Darker blue on hover */
         }
-
 .create-card {
     width: 30rem;
     padding: 2rem;
@@ -124,3 +123,4 @@ hr {
 .btn-sm:hover {
     opacity: 0.8;
 }
+
