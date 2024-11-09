@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Report Page";
+}
+<div class="container">
+    
+    <!-- Month Comparison Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Month-to-Month Comparison</h5>
+                    <div class="d-flex justify-content-end">
+                        <select id="monthSelect" class="form-select me-2" style="width: auto;">
+                            @for (int m = 1; m <= 12; m++)
+                            {
+                                var isSelected = m == (int?)ViewData["CurrentMonth"];
+                                <option value="@m" selected="@isSelected">
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
+                                </option>
+                            }
+                        </select>
+                        <select id="compareMonthSelect" class="form-select me-2" style="width: auto;">
+                            @for (int m = 1; m <= 12; m++)
+                            {
+                                var isSelected = m == (int?)ViewData["CompareMonth"];
+                                <option value="@m" selected="@isSelected">
+                                    @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
+                                </option>
+                            }
+                        </select>
+                        <select id="yearSelect" class="form-select" style="width: auto;">
+                            @for (int y = DateTime.Now.Year; y >= 2000; y--)
+                            {
+                                var isSelected = y == (int?)ViewData["CurrentYear"];
+                                <option value="@y" selected="@isSelected">@y</option>
+                            }
+                        </select>
+                        <button id="compareButton" class="btn btn-primary ms-2">Compare</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="comparisonChart" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        try {
+            var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
+            var monthlyCategoryData = JSON.parse('@Html.Raw(ViewData["MonthlyCategoryData"])');
+            var comparisonData = JSON.parse('@Html.Raw(ViewData["ComparisonData"])');
+
+
+            // Comparison Chart
+            if (comparisonData && comparisonData.length > 0) {
+                var comparisonLabels = comparisonData.map(item => item.name);
+                var currentMonthData = comparisonData.map(item => item.currentAmount);
+                var compareMonthData = comparisonData.map(item => item.compareAmount);
+
+                var comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+                new Chart(comparisonCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: comparisonLabels,
+                        datasets: [
+                            {
+                                label: document.getElementById('monthSelect').options[document.getElementById('monthSelect').selectedIndex].text,
+                                data: currentMonthData,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: document.getElementById('compareMonthSelect').options[document.getElementById('compareMonthSelect').selectedIndex].text,
+                                data: compareMonthData,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        },
+                        plugins: {
+                            legend: { display: true },
+                            title: {
+                                display: true,
+                                text: 'Month-to-Month Expense Comparison by Category'
+                            }
+                        }
+                    }
+                });
+            }
+
+          
+
+            // Comparison Filter Button
+            document.getElementById('compareButton').addEventListener('click', function () {
+                var selectedYear = document.getElementById('yearSelect').value;
+                var selectedMonth = document.getElementById('monthSelect').value;
+                var compareMonth = document.getElementById('compareMonthSelect').value;
+                window.location.href = `?year=${selectedYear}&month=${selectedMonth}&compareMonth=${compareMonth}`;
+            });
+
+            
+
+        } catch (error) {
+            console.error('Error creating charts:', error);
+        }
+    });
+
+    function generateColors(count) {
+        var colors = [
+            '255, 99, 132',
+            '54, 162, 235',
+            '255, 206, 86',
+            '75, 192, 192',
+            '153, 102, 255',
+            '255, 159, 64'
+        ];
+
+        while (colors.length < count) {
+            colors.push(`${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`);
+        }
+
+        return colors;
+    }
+</script>
