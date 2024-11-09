@@ -1,89 +1,84 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.ExpenseViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Page";
 }
-    <div class="create-container">
-        <div class="create-card">
-        <h1>Create Expense</h1>
-        <hr />
-        <div class="row">
-            <div class="col">
-                <form asp-action="Edit" enctype="multipart/form-data">
-                    <input type="hidden" asp-for="ExpenseId" />
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group  mb-3">
-                        <label asp-for="Title" class="control-label"></label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Amount" class="control-label"></label>
-                        <input asp-for="Amount" class="form-control" />
-                        <span asp-validation-for="Amount" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="DateCreated" class="control-label"></label>
-                        <input asp-for="DateCreated" class="form-control" type="date" /> <!-- Date Picker -->
-                        <span asp-validation-for="DateCreated" class="text-danger"></span>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="CategoryId" class="control-label"></label>
-                        <select asp-for="CategoryId" class="form-control" id="categoryDropdown">
-                            <option value="">-- Select Category --</option>
-                            <!-- Options will be populated here dynamically -->
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
-                    <div class="text-center">
-                            <input type="submit" value="Edit" class="btn btn-primary w-100" />
-                     </div>
-                </form>
-            </div>
-        </div>
+<h1>Edit</h1>
 
-         <div class="text-center mt-3">
-                <a asp-action="Index" class="btn btn-secondary">Back</a>
-         </div>
+<h4>Sample Data</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ExpenseId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateCreated" class="control-label"></label>
+                <input asp-for="DateCreated" class="form-control" type="date" /> <!-- Date Picker -->
+                <span asp-validation-for="DateCreated" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" id="categoryDropdown">
+                    <option value="">-- Select Category --</option>
+                    <!-- Options will be populated here dynamically -->
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
 </div>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-        <script>
-            $(document).ready(function () {
-                const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
-                fetch(apiUrl)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
+    <script>
+        $(document).ready(function () {
+            const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const categoryDropdown = $('#categoryDropdown');
+                    data.forEach(category => {
+                        const option = $('<option></option>')
+                            .val(category.categoryId)
+                            .text(category.name);
+
+                        // Select the current category if it matches Model.CategoryId
+                        if (category.categoryId == '@Model.CategoryId') {
+                            option.attr("selected", "selected");
                         }
-                        return response.json();
-                    })
-                    .then(data => {
-                        const categoryDropdown = $('#categoryDropdown');
-                        data.forEach(category => {
-                            const option = $('<option></option>')
-                                .val(category.categoryId)
-                                .text(category.name);
 
-                            // Select the current category if it matches Model.CategoryId
-                            if (category.categoryId == '@Model.CategoryId') {
-                                option.attr("selected", "selected");
-                            }
-
-                            categoryDropdown.append(option);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching categories:', error);
+                        categoryDropdown.append(option);
                     });
                 })
                 .catch(error => {
@@ -92,4 +87,3 @@
         });
     </script>
 }
-

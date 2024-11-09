@@ -1,22 +1,43 @@
 ﻿@{
-    ViewData["Title"] = "Report Page";
+    ViewData["Title"] = "Expense Breakdown";
 }
 <div class="container">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">Category Breakdown</h5>
+                <div class="d-flex justify-content-end mt-2">
+                    <select id="monthSelect" class="form-select me-2" style="width: auto;">
+                        @for (int m = 1; m <= 12; m++)
+                        {
+                            var isSelected = m == (int?)ViewData["CurrentMonth"];
+                            <option value="@m" selected="@isSelected">
+                                @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)
+                            </option>
+                        }
+                    </select>
+                    <select id="yearSelect" class="form-select me-2" style="width: auto;">
+                        @for (int y = DateTime.Now.Year; y >= 2000; y--)
+                        {
+                            var isSelected = y == (int?)ViewData["CurrentYear"];
+                            <option value="@y" selected="@isSelected">@y</option>
+                        }
+                    </select>
+                    <button id="filterButton" class="btn btn-primary">Filter</button>
+                </div>
             </div>
             <div class="card-body">
+                <div class="mb-3">
+                    <h6>Total Expenses: ₱@(((decimal)ViewData["TotalAmount"]).ToString("N2"))</h6>
+                </div>
                 <div id="categoryList" class="list-group">
                     <!-- Categories will be populated by JavaScript -->
                 </div>
             </div>
         </div>
     </div>
-
 </div>
-<div>
+<div class="mt-3">
     <a asp-action="Index">Back to List</a>
 </div>
 
@@ -25,35 +46,52 @@
     document.addEventListener('DOMContentLoaded', function () {
         try {
             var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
-            
-            var labels = categoryData.map(item => item.name);
-            var dataValues = categoryData.map(item => item.amount);
-            var colors = generateColors(categoryData.length);
-
 
             // Populate category list
             var categoryList = document.getElementById('categoryList');
-            categoryData.forEach((category, index) => {
-                var color = `rgba(${colors[index]}, 0.2)`;
-                var borderColor = `rgba(${colors[index]}, 1)`;
+            categoryList.innerHTML = ''; // Clear existing items
 
-                var listItem = document.createElement('div');
-                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                listItem.style.borderLeft = `4px solid ${borderColor}`;
+            if (categoryData.length === 0) {
+                // Show message if no expenses for selected month
+                var noDataMessage = document.createElement('div');
+                noDataMessage.className = 'alert alert-info';
+                noDataMessage.textContent = 'No expenses recorded for this month.';
+                categoryList.appendChild(noDataMessage);
+            } else {
+                // Create list items for each category
+                categoryData.forEach((category, index) => {
+                    var color = generateColors(1)[0];
+                    var listItem = document.createElement('div');
+                    listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    listItem.style.borderLeft = `4px solid rgba(${color}, 1)`;
+                    listItem.innerHTML = `
+                            <div>
+                                <h6 class="mb-0">${category.name}</h6>
+                                <small class="text-muted">₱${category.amount.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    })}</small>
+                            </div>
+                            <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
+                        `;
+                    categoryList.appendChild(listItem);
+                });
+            }
 
-                listItem.innerHTML = `
-                        <div>
-                            <h6 class="mb-0">${category.name}</h6>
-                            <small class="text-muted">₱${category.amount.toLocaleString()}</small>
-                        </div>
-                        <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
-                    `;
-
-                categoryList.appendChild(listItem);
+            // Filter button functionality
+            document.getElementById('filterButton').addEventListener('click', function () {
+                var selectedMonth = document.getElementById('monthSelect').value;
+                var selectedYear = document.getElementById('yearSelect').value;
+                window.location.href = `?month=${selectedMonth}&year=${selectedYear}`;
             });
 
         } catch (error) {
-            console.error('Error creating charts:', error);
+            console.error('Error creating breakdown:', error);
+            // Show error message to user
+            var errorMessage = document.createElement('div');
+            errorMessage.className = 'alert alert-danger';
+            errorMessage.textContent = 'An error occurred while loading the breakdown.';
+            categoryList.appendChild(errorMessage);
         }
     });
 
@@ -66,11 +104,9 @@
             '153, 102, 255',
             '255, 159, 64'
         ];
-
         while (colors.length < count) {
             colors.push(`${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`);
         }
-
         return colors;
     }
 </script>

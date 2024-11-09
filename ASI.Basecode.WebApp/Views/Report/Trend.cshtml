@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Trends Report";
+}
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Trend Expenses Trend</h5>
+                    <div class="d-flex justify-content-end">
+                        <select id="yearSelect" class="form-select" style="width: auto;">
+                            @for (int y = DateTime.Now.Year; y >= 2000; y--)
+                            {
+                                var isSelected = y == (int?)ViewData["CurrentYear"];
+                                <option value="@y" selected="@isSelected">@y</option>
+                            }
+                        </select>
+                        <button id="filterButton" class="btn btn-primary ms-2">Filter</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="expensesChart" style="height: 400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        try {
+            var yearlyData = JSON.parse('@Html.Raw(ViewData["YearlyCategoryData"])');
+
+            // Get unique categories across all months
+            var categories = [...new Set(yearlyData.flatMap(month =>
+                month.categories.map(cat => cat.name)
+            ))];
+
+            // Prepare data for Chart.js
+            var monthLabels = yearlyData.map(item => item.monthName);
+            var datasets = categories.map((category, index) => {
+                var color = generateColor(index);
+                return {
+                    label: category,
+                    data: yearlyData.map(month => {
+                        var categoryData = month.categories.find(cat => cat.name === category);
+                        return categoryData ? categoryData.amount : 0;
+                    }),
+                    backgroundColor: `rgba(${color}, 0.7)`,
+                    borderColor: `rgba(${color}, 1)`,
+                    borderWidth: 1
+                };
+            });
+
+            // Create the chart
+            var ctx = document.getElementById('expensesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: monthLabels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Amount'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            onClick: function (e, legendItem, legend) {
+                                const index = legendItem.datasetIndex;
+                                const ci = legend.chart;
+                                if (ci.isDatasetVisible(index)) {
+                                    ci.hide(index);
+                                    legendItem.hidden = true;
+                                } else {
+                                    ci.show(index);
+                                    legendItem.hidden = false;
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }).format(context.raw);
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    // This is the key change - removing stacking and adjusting bar settings
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.9
+                }
+            });
+
+            // Year filter functionality
+            document.getElementById('filterButton').addEventListener('click', function () {
+                var selectedYear = document.getElementById('yearSelect').value;
+                window.location.href = `?year=${selectedYear}`;
+            });
+
+        } catch (error) {
+            console.error('Error creating chart:', error);
+        }
+    });
+
+    function generateColor(index) {
+        const colors = [
+            '255, 99, 132',   // red
+            '54, 162, 235',   // blue
+            '255, 206, 86',   // yellow
+            '75, 192, 192',   // green
+            '153, 102, 255',  // purple
+            '255, 159, 64'    // orange
+        ];
+        return colors[index % colors.length];
+    }
+</script>

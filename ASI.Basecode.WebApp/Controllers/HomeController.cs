@@ -41,29 +41,36 @@ namespace ASI.Basecode.WebApp.Controllers
         /// <returns> Home View </returns>
         public IActionResult Index(int? year, int? month)
         {
-            var totalAmount = _expenseService.RetrieveAll(UserId).Sum(exp => exp.Amount ?? 0);
-            ViewData["TotalAmount"] = totalAmount; // Pass the total amount to the view
+            var allExpenses = _expenseService.RetrieveAll(UserId);
+            var totalAmount = allExpenses.Sum(exp => exp.Amount ?? 0);
+            ViewData["TotalAmount"] = totalAmount;
 
-            var categoryData = _expenseService.RetrieveAll(UserId)
-            .GroupBy(e => e.Name)
-            .Select(g => new
-            {
-                name = g.Key,
-                amount = g.Sum(e => e.Amount ?? 0),
-                percentage = (g.Sum(e => e.Amount ?? 0) / totalAmount) * 100 // Calculate percentage
-            })
-            .OrderByDescending(x => x.amount) // Sort by amount
-            .ToList();
+            // Calculate average monthly expenses using DateCreated
+            var distinctMonths = allExpenses
+                .Where(exp => exp.DateCreated != null)
+                .Select(exp => new { exp.DateCreated.Value.Year, exp.DateCreated.Value.Month })
+                .Distinct()
+                .Count();
+            var averageMonthlyExpense = distinctMonths > 0 ? totalAmount / distinctMonths : 0;
+            ViewData["AverageMonthlyExpense"] = averageMonthlyExpense;
+
+            var categoryData = allExpenses
+                .GroupBy(e => e.Name)
+                .Select(g => new
+                {
+                    name = g.Key,
+                    amount = g.Sum(e => e.Amount ?? 0),
+                    percentage = (g.Sum(e => e.Amount ?? 0) / totalAmount) * 100
+                })
+                .OrderByDescending(x => x.amount)
+                .ToList();
 
             ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
 
-           
-
             return View();
-
         }
 
-       
+
 
     }
 }
