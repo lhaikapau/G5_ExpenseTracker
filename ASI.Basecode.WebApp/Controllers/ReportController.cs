@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System;
 using System.Text.Json;
+using System.Globalization;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -34,7 +35,39 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(int? year, int? month, int? compareMonth)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Trend(int? year)
+        {
+            year = year ?? DateTime.Now.Year;
+
+            // Retrieve yearly data with all months and categories
+            var yearlyCategoryData = Enumerable.Range(1, 12).Select(month =>
+            {
+                var monthlyExpenses = _expenseService.RetrieveByMonth(UserId, year.Value, month);
+                return new
+                {
+                    month,
+                    monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
+                    categories = monthlyExpenses
+                        .GroupBy(e => e.Name)
+                        .Select(g => new { name = g.Key, amount = g.Sum(e => e.Amount ?? 0) })
+                        .ToList()
+                };
+            }).ToList();
+
+            ViewData["YearlyCategoryData"] = JsonSerializer.Serialize(yearlyCategoryData);
+            ViewData["CurrentYear"] = year;
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MonthVsMonth(int? year, int? month, int? compareMonth)
         {
             var totalAmount = _expenseService.RetrieveAll(UserId).Sum(exp => exp.Amount ?? 0);
             ViewData["TotalAmount"] = totalAmount;
@@ -98,6 +131,40 @@ namespace ASI.Basecode.WebApp.Controllers
                 .ToList();
 
             ViewData["MonthlyCategoryData"] = JsonSerializer.Serialize(monthlyCategoryData);
+
+            return View();
+        }
+
+        [HttpGet]
+
+        public IActionResult Breakdown(int? month, int? year)
+        {
+            month = month ?? DateTime.Now.Month;
+            year = year ?? DateTime.Now.Year;
+
+            var monthlyExpenses = _expenseService.RetrieveByMonth(UserId, year.Value, month.Value);
+            decimal totalAmount = monthlyExpenses.Sum(exp => (decimal)(exp.Amount ?? 0.0));  // Convert double? to decimal
+
+            var categoryData = monthlyExpenses
+
+                .GroupBy(e => e.Name)
+                .Select(g => new
+                {
+                    name = g.Key,
+
+                    amount = (decimal)g.Sum(e => e.Amount ?? 0.0),  // Convert double? to decimal
+                    percentage = totalAmount > 0
+                        ? decimal.Round((decimal)g.Sum(e => e.Amount ?? 0.0) / totalAmount * 100M, 1)
+                        : 0M
+
+                })
+                .OrderByDescending(x => x.amount)
+                .ToList();
+
+            ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
+            ViewData["TotalAmount"] = totalAmount;
+            ViewData["CurrentMonth"] = month;
+            ViewData["CurrentYear"] = year;
 
             return View();
         }
