@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     position: relative;
     margin: 40px;
     padding: 20px; /* Add padding for spacing */
@@ -124,3 +123,9 @@ hr {
     opacity: 0.8;
 }
 
+.create-btn{
+    text-align: center;
+}
+.modal-body{
+    align-items: center;
+}
