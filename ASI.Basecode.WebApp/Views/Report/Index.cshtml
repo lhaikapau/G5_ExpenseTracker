@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Report Page";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2 class="mb-4">Expense Analysis Dashboard</h2>
+
+            <div class="d-grid gap-4">
+                <!-- Monthly Graph Form -->
+                <form asp-action="Monthly" method="get">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-line me-2" viewBox="0 0 16 16">
+                                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2z" />
+                            </svg>
+                            <span>Monthly Expenses Graph</span>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Monthly Comparison Graph Form -->
+                <form asp-action="MonthVsMonth" method="get">
+                    <button type="submit" class="btn btn-success btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-graph-up-arrow me-2" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z" />
+                            </svg>
+                            <span>Month-to-Month Comparison</span>
+                        </div>
+                    </button>
+                </form>
+
+                <!-- Category Breakdown Form -->
+                <form asp-action="Breakdown" method="get">
+                    <button type="submit" class="btn btn-info btn-lg w-100">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pie-chart-fill me-2" viewBox="0 0 16 16">
+                                <path d="M15.985 8.5H8.207l-5.5 5.5a8 8 0 0 0 13.277-5.5zM2 13.292A8 8 0 0 1 7.5.015v7.778l-5.5 5.5zM8.5.015V7.5h7.485A8.001 8.001 0 0 0 8.5.015z" />
+                            </svg>
+                            <span>Category Expenses Breakdown</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add this script section at the bottom of your view -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.btn');
+
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-3px)';
+                this.style.transition = 'transform 0.2s';
+            });
+
+            button.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+</script>
+
+<!-- Add these styles to your view -->
+<style>
+    .btn-lg {
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .btn-lg:hover {
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .btn-primary {
+        background-color: #4361ee;
+        border-color: #4361ee;
+    }
+
+    .btn-success {
+        background-color: #2ec4b6;
+        border-color: #2ec4b6;
+    }
+
+    .btn-info {
+        background-color: #ff9f1c;
+        border-color: #ff9f1c;
+        color: white;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    h2 {
+        color: #2b2d42;
+        font-weight: 600;
+    }
+
+    form {
+        margin: 0;
+    }
+</style>

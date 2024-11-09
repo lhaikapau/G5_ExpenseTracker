@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Drawing;
 using System.Linq;
 using System.Text.Json;
 
@@ -37,7 +39,7 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Returns Home View.
         /// </summary>
         /// <returns> Home View </returns>
-        public IActionResult Index()
+        public IActionResult Index(int? year, int? month)
         {
             var totalAmount = _expenseService.RetrieveAll(UserId).Sum(exp => exp.Amount ?? 0);
             ViewData["TotalAmount"] = totalAmount; // Pass the total amount to the view
@@ -55,11 +57,13 @@ namespace ASI.Basecode.WebApp.Controllers
 
             ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
 
-
+           
 
             return View();
 
         }
+
+       
 
     }
 }

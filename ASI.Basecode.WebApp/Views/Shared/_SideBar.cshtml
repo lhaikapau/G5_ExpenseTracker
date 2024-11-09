@@ -1,49 +1,59 @@
-﻿﻿@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 
 @if (ViewBag.LoginView != true)  // Check if user is not logged in
 {
     <div id="sidebar" class="bg-light border-right">
         <div class="sidebar-heading">
             <span id="sidebarTitle" class="title">Dashboard</span>
-            <button id="toggleSidebar" class="btn btn-sm btn-outline-secondary ">
+            <button id="toggleSidebar" class="btn btn-sm ">
                 <i class="fas fa-angle-left"></i> <!-- Left arrow icon -->
             </button>
         </div>
         <ul class="side_nav flex-column" style="padding: 0;">
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index", "Home")">
-                    <span class="full-text">Home</span>
+                <a class="nav-link" href="@Url.Action("Index", "Home")" title="Home">
+                    <span class="full-text">🏠 &nbsp&nbspHome</span>
                     <span class="collapsed-text" style="display: none;">🏠</span> <!-- Home symbol -->
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index", "Category")">
-                    <span class="full-text">Category</span>
+                <a class="nav-link" href="@Url.Action("Index", "Category")" title="Category">
+                    <span class="full-text">📂 &nbsp&nbspCategory</span>
                     <span class="collapsed-text" style="display: none;">📂</span> <!-- Category symbol -->
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Index", "Expense")">
-                    <span class="full-text">Expense</span>
+                <a class="nav-link" href="@Url.Action("Index", "Expense")" title="Expense">
+                    <span class="full-text">💰 &nbsp&nbsp&nbspExpense</span>
                     <span class="collapsed-text" style="display: none;">💰</span> <!-- Expense symbol -->
+                </a>
+            </li>
+            <li class="nav-item">
+                <!-- New Report button -->
+                <a class="nav-link" href="@Url.Action("Index", "Report")" title="Report">
+                    <span class="full-text">📊 &nbsp&nbspReport</span>
+                    <span class="collapsed-text" style="display: none;">📊</span> <!-- Report symbol -->
                 </a>
             </li>
         </ul>
     </div>
 
     <script>
+
         document.addEventListener("DOMContentLoaded", function () {
             var sidebar = document.getElementById("sidebar");
+            var sideNav = document.querySelector(".side_nav");
             var container = document.querySelector(".container");
-
             // Check local storage for the sidebar state on page load
             var isCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
             if (isCollapsed) {
                 sidebar.classList.add("collapsed");
+                sideNav.classList.add("collapsed");
                 container.style.marginLeft = "80px";
                 toggleSidebarIcons(true);
             } else {
                 sidebar.classList.remove("collapsed");
+                sideNav.classList.remove("collapsed");
                 container.style.marginLeft = "200px";
                 toggleSidebarIcons(false);
             }
@@ -51,6 +61,7 @@
             // Handle the sidebar toggle
             document.getElementById("toggleSidebar").addEventListener("click", function () {
                 sidebar.classList.toggle("collapsed");
+                sideNav.classList.toggle("collapsed");
                 var collapsed = sidebar.classList.contains("collapsed");
 
                 // Save the collapsed state to local storage

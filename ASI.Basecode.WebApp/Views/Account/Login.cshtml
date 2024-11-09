@@ -4,6 +4,7 @@
     ViewBag.LoginView = true;
     ViewData["Title"] = "Login Page";
 }
+
 @section styles {
     <link rel="stylesheet" href="~/css/login-ui.css" />
 }
@@ -30,6 +31,7 @@
                 <div class="button-group">
                     <button class="login-btn" type="submit">Login</button>
                     <a asp-controller="Account" asp-action="Register" class="register-link">Create an Account</a>
+
                 </div>
             </form>
         </div>
@@ -54,3 +56,4 @@
         }
     </script>
 }
+

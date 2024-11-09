@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Report Page";
+}
+<div class="container">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Category Breakdown</h5>
+            </div>
+            <div class="card-body">
+                <div id="categoryList" class="list-group">
+                    <!-- Categories will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        try {
+            var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
+            
+            var labels = categoryData.map(item => item.name);
+            var dataValues = categoryData.map(item => item.amount);
+            var colors = generateColors(categoryData.length);
+
+
+            // Populate category list
+            var categoryList = document.getElementById('categoryList');
+            categoryData.forEach((category, index) => {
+                var color = `rgba(${colors[index]}, 0.2)`;
+                var borderColor = `rgba(${colors[index]}, 1)`;
+
+                var listItem = document.createElement('div');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.style.borderLeft = `4px solid ${borderColor}`;
+
+                listItem.innerHTML = `
+                        <div>
+                            <h6 class="mb-0">${category.name}</h6>
+                            <small class="text-muted">₱${category.amount.toLocaleString()}</small>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">${category.percentage.toFixed(1)}%</span>
+                    `;
+
+                categoryList.appendChild(listItem);
+            });
+
+        } catch (error) {
+            console.error('Error creating charts:', error);
+        }
+    });
+
+    function generateColors(count) {
+        var colors = [
+            '255, 99, 132',
+            '54, 162, 235',
+            '255, 206, 86',
+            '75, 192, 192',
+            '153, 102, 255',
+            '255, 159, 64'
+        ];
+
+        while (colors.length < count) {
+            colors.push(`${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`);
+        }
+
+        return colors;
+    }
+</script>

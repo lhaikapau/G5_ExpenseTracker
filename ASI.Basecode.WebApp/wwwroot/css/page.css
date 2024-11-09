@@ -1,0 +1,126 @@
+﻿/* Styling for the page container */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 40px;
+    padding: 20px; /* Add padding for spacing */
+    border: 2px solid #ddd; /* Light border around the container */
+    border-radius: 12px; /* Rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+
+    /* Header styling */
+    .page-container h1 {
+        font-size: 2rem;
+        color: #333; /* Dark color for the title */
+        text-align: center;
+        margin-bottom: 20px; /* Space below the title */
+    }
+
+/* Styling for horizontal line */
+hr {
+    width: 100%; /* Slightly narrower to make it more aesthetic */
+    height: 2px;
+    background-color: #ccc; /* Lighter line color */
+    border: none;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Create button container styling */
+.create-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+    /* Styling for the "Create New" button */
+    .create-container .btn {
+        padding: 10px 20px;
+        background-color: #007bff; /* Blue color */
+        color: white;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .create-container .btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+.create-card {
+    width: 30rem;
+    padding: 2rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    align-items: center;
+}
+
+    .create-card h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .create-card .form-group {
+        margin-bottom: 1rem;
+    }
+
+/* Table styling */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse; /* To remove gaps between table cells */
+}
+
+    .table th, .table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd; /* Light border for rows */
+    }
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9; /* Slightly different color for odd rows */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1; /* Hover effect for rows */
+}
+
+.table th {
+    background-color: #007bff; /* Header background color */
+    color: white;
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Action button styles */
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-sm:hover {
+    opacity: 0.8;
+}
+
