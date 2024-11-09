@@ -53,6 +53,8 @@ header {
     cursor: pointer;
 }
 
+}
+
 .searchbar,
 .message,
 .logosec {
@@ -361,10 +363,428 @@ header {
     border-radius: 4px;
 }
 
-.container {
-    max-width: 100%;
-    max-height: 100%;
-    position: relative;
-    justify-content: center;
-    transition: margin-left 0.3s ease;
+/*Side Bar*/
+
+#sidebar {
+    background-color: #1e272e; /* Sidebar background color */
+    color: black; /* Change text color to black */
+    position: fixed; /* Fixed positioning */
+    top: 70px; /* Below header */
+    left: 0; /* Align to the left */
+    width: 200px; /* Width of the sidebar */
+    height: calc(100vh - 70px); /* Full height minus header */
+    padding: 20px 0; /* Top and bottom padding */
+    overflow-y: auto; /* Scroll if content exceeds height */
+    z-index: 99; /* Above other content */
 }
+
+    #sidebar.collapsed {
+        width: 80px; /* Width when minimized */
+        padding: 20px 0; /* Ensure padding remains */
+    }
+        #sidebar.collapsed .nav-link {
+            padding: 10px 0; /* Adjust padding when minimized */
+        }
+
+        #sidebar.collapsed ~ .container {
+            margin-left: 80px; /* Adjust container margin when sidebar is minimized */
+        }
+
+        #sidebar.collapsed .sidebar-heading {
+            padding: 15px 10px;
+            justify-content: center;
+        }
+
+        #sidebar.collapsed #toggleSidebar {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        #sidebar.collapsed #sidebarTitle {
+            display: none;
+        }
+
+.sidebar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid #ddd; 
+}
+
+#sidebarTitle.title {
+    color: #343a40; 
+    font-size: 1.1rem;
+    margin-right: auto;
+}
+
+
+#toggleSidebar {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: #6c757d; 
+    border: 1px solid #ced4da; 
+    border-radius: 4px;
+    background-color: #ffffff; 
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+    #toggleSidebar:hover {
+        color: #0056b3;
+        background-color: #e2e6ea; 
+    }
+
+    #toggleSidebar i {
+        font-size: 1.2rem;
+    }
+
+.side_nav {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0; 
+}
+
+.nav-item {
+    margin: 0; 
+}
+
+.nav-link {
+    display: block; 
+    padding: 10px 20px; 
+    color: black;
+    text-decoration: none; 
+    transition: background-color 0.3s; 
+
+}
+
+    .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.1); 
+    }
+
+.container {
+    margin-left: 200px;
+}
+
+.side_nav .nav-link {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+/* Global Styles */
+/* Login Container */
+/* Register Container */
+.register-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    margin-left: 150px;
+}
+
+/* Register Card */
+.register-card {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #efeaf6, #daceea);
+}
+
+/* Register Form */
+.register-form {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+.form-title {
+    font-size: 40px !important;
+    font-weight: bold !important;
+    color: #483D8B;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+    .input-group label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-group .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        margin-top: 1px;
+    }
+
+    .input-group input:focus {
+        border-color: #9370DB;
+    }
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.register-btn {
+    background-color: #9370DB;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: 'Nunito', sans-serif;
+}
+
+    .register-btn:hover {
+        background-color: #483D8B;
+    }
+
+.back-link {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #9370DB;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+}
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+/* Register Image Section */
+.register-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+}
+
+/* Register Logo (distinct class) */
+.register-logo {
+    width: 500px;
+    height: auto;
+    object-fit: contain;
+    margin-left: -30px;
+    animation: bounce 2s infinite;
+}
+/* Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+/* Login UI - Global Styles */
+body {
+    background-color: #e1d6f5;
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Login UI - Center the login container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    margin-left: 150px;
+}
+
+/* Login UI - Card Styling */
+.login-card {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #efeaf6, #daceea);
+}
+
+/* Login UI - Form Styling */
+.login-form {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+/* Login UI - Title */
+.form-title {
+    font-size: 40px !important;
+    font-weight: bold !important;
+    color: #483D8B;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+/* Login UI - Input Fields */
+.input-group {
+    margin-bottom: 25px;
+}
+
+    .input-group label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .input-group .form-control {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        outline: none;
+        margin-top: 8px;
+    }
+
+    .input-group input:focus {
+        border-color: #9370DB;
+    }
+
+/* Login UI - Button Group */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Login UI - Login Button */
+.login-btn {
+    background-color: #9370DB;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    font-family: 'Nunito', sans-serif;
+}
+
+    .login-btn:hover {
+        background-color: #483D8B;
+    }
+
+/* Login UI - Link to Register */
+.register-link {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #9370DB;
+    font-family: 'Nunito', sans-serif;
+    text-decoration: none;
+}
+
+    .register-link:hover {
+        text-decoration: underline;
+}
+
+/* Login UI - Image Section */
+.login-image {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+}
+
+/* Login UI - Bounce Animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Login UI - Logo Styling */
+.logo {
+    width: 500px;
+    height: auto;
+    object-fit: contain;
+    margin-left: -30px;
+    animation: bounce 2s infinite;
+}
+
+/* Login UI - Input Validation Message */
+.input-group span {
+    margin-top: 5px;
+    display: block;
+    font-size: 15px;
+}
+
+/* Login UI - Background Circles */
+.background-shape {
+    position: fixed;
+    border-radius: 100%;
+    opacity: 0.5;
+}
+
+.circle-one {
+    width: 500px;
+    height: 500px;
+    top: -20%;
+    left: -100px;
+    background-color: #483D8B;
+    animation: bounce 4s infinite ease-in-out;
+}
+
+.circle-two {
+    width: 500px;
+    height: 500px;
+    bottom: -20%;
+    right: -100px;
+    background-color: #9370DB;
+    animation: bounce 4.5s infinite ease-in-out;
+    animation-delay: 2s;
+    z-index: 10;
+}
+
