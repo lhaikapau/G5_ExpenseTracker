@@ -411,12 +411,13 @@ header {
     padding: 15px;
     font-size: 1.25rem;
     font-weight: bold;
-    background-color: #f8f9fa; 
-    border-bottom: 1px solid #ddd; 
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
 }
 
 #sidebarTitle.title {
-    color: #343a40; 
+    color: #343a40;
+
     font-size: 1.1rem;
     margin-right: auto;
 }
@@ -425,10 +426,10 @@ header {
 #toggleSidebar {
     padding: 5px 10px;
     font-size: 0.9rem;
-    color: #6c757d; 
-    border: 1px solid #ced4da; 
+    color: #6c757d;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -436,7 +437,7 @@ header {
 
     #toggleSidebar:hover {
         color: #0056b3;
-        background-color: #e2e6ea; 
+        background-color: #e2e6ea;
     }
 
     #toggleSidebar i {
@@ -444,26 +445,25 @@ header {
     }
 
 .side_nav {
-    list-style-type: none; 
-    padding: 0; 
-    margin: 0; 
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-item {
-    margin: 0; 
+    margin: 0;
 }
 
 .nav-link {
-    display: block; 
-    padding: 10px 20px; 
+    display: block;
+    padding: 10px 20px;
     color: black;
-    text-decoration: none; 
-    transition: background-color 0.3s; 
-
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
     .nav-link:hover {
-        background-color: rgba(0, 0, 0, 0.1); 
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
 .container {
@@ -471,10 +471,11 @@ header {
 }
 
 .side_nav .nav-link {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 /* Global Styles */
 /* Login Container */
 /* Register Container */
@@ -721,8 +722,9 @@ body {
     text-decoration: none;
 }
 
-    .register-link:hover {
+.register-link:hover {
         text-decoration: underline;
+
 }
 
 /* Login UI - Image Section */

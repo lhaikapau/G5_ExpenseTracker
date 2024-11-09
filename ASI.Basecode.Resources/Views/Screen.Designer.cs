@@ -61,7 +61,9 @@ namespace ASI.Basecode.Resources.Views {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ©2024 Packet Pal Tracker. All rights reserved..
+
+        ///   Looks up a localized string similar to .
+
         /// </summary>
         public static string Copyright {
             get {
