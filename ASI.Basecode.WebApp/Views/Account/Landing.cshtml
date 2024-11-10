@@ -18,8 +18,8 @@
 
     <!-- Header Section with conditional navbar visibility -->
     <header class="@(ViewBag.LoginView == true)">
-        <div style="background-color: #5C3E9C; padding: 20px; width: 100%; box-sizing: border-box;">
-            <span style="color: white; font-size: 24px; font-weight: 500; margin-right: 10px">PocketPal</span>
+        <div style="background-color: #5C3E9C; padding: 20px; width: 100%; box-sizing: border-box; align-items: center;">
+            <span style="color: white; font-size: 30px; font-weight: 500;">PocketPal</span>
         </div>
     </header>
 
@@ -27,9 +27,9 @@
     <div style="display: flex; justify-content: space-between; align-items: center; padding: 40px; max-width: 95%; margin: 0 auto; box-sizing: border-box;">
 
         <!-- Left Side Content -->
-        <div style="max-width: 50%; margin-top: 60px;">
+        <div style="max-width: 50%; margin-top: 40px;">
             <p style="color: #5C3E9C; font-size: 18px; margin: 0;">- Track your expenses and gain</p>
-            <h1 style="font-size: 48px; font-weight: bold; margin: 20px 0;">The best way to track your expenses.</h1>
+            <h1 style="font-size: 48px; font-weight: bold; margin: 10px 0;">The best way to track your expenses.</h1>
             <p style="font-size: 18px; color: #555;">Let PocketPal help you manage your finances.</p>
 
             <div style="margin-top: 60px;">
@@ -45,10 +45,13 @@
         </div>
 
         <!-- Right Side Logo -->
-        <div>
-            <img style="width:600px; height:500px; margin-top: 60px;" src="~/img/PocketPAL.png" />
+        <div class="login-image">
+            <!-- PAL POCKET TRACKER Logo on the Right -->
+            <img src="~/img/PocketPAL.png" alt="PAL POCKET TRACKER Logo" class="logo">
         </div>
     </div>
-
+    <!-- Background Circles for Login UI -->
+    <div class="background-shape circle-three"></div>
+    <div class="background-shape circle-four"></div>
 </body>
 </html>
