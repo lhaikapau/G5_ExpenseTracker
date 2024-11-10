@@ -12,19 +12,22 @@ namespace ASI.Basecode.Services.ServiceModels
         public int ExpenseId { get; set; }
         public int? CategoryId { get; set; }
 
-        [Required(ErrorMessage = "Required.")]
+        [Required(ErrorMessage = "Required Expense Name.")]
         public string Title { get; set; }
-        [Required(ErrorMessage = "Required.")]
+
+        [Required(ErrorMessage = "Required Amount input.")]
         public double? Amount { get; set; }
 
         public string CreatedBy { get; set; }
 
-        [Required(ErrorMessage = "Required.")]
+        [Required(ErrorMessage = "Required Date.")]
         public DateTime? DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
 
-        [Required(ErrorMessage = "Required.")]
+        [Required(ErrorMessage = "Required Expense Description.")]
         public string Description { get; set; }
+
+        [Required(ErrorMessage = "Required Category Name.")]
         public string Name { get; set; }
     }
 }

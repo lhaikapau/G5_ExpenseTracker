@@ -136,6 +136,7 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpGet]
+
         public IActionResult Breakdown(int? month, int? year)
         {
             month = month ?? DateTime.Now.Month;
@@ -145,14 +146,17 @@ namespace ASI.Basecode.WebApp.Controllers
             decimal totalAmount = monthlyExpenses.Sum(exp => (decimal)(exp.Amount ?? 0.0));  // Convert double? to decimal
 
             var categoryData = monthlyExpenses
+
                 .GroupBy(e => e.Name)
                 .Select(g => new
                 {
                     name = g.Key,
+
                     amount = (decimal)g.Sum(e => e.Amount ?? 0.0),  // Convert double? to decimal
                     percentage = totalAmount > 0
                         ? decimal.Round((decimal)g.Sum(e => e.Amount ?? 0.0) / totalAmount * 100M, 1)
                         : 0M
+
                 })
                 .OrderByDescending(x => x.amount)
                 .ToList();

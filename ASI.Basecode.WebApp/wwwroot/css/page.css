@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     position: relative;
     margin: 40px;
     padding: 20px; /* Add padding for spacing */
@@ -53,7 +52,6 @@ hr {
         .create-container .btn:hover {
             background-color: #0056b3; /* Darker blue on hover */
         }
-
 .create-card {
     width: 30rem;
     padding: 2rem;
@@ -123,4 +121,11 @@ hr {
 
 .btn-sm:hover {
     opacity: 0.8;
+}
+
+.create-btn{
+    text-align: center;
+}
+.modal-body{
+    align-items: center;
 }

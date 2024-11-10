@@ -21,7 +21,7 @@
 
 body {
     background-color: var(--background-color4);
-    max-width: 100%;
+    width: 100%;
     height: 100%;
     overflow-x: hidden;
     margin-top: 70px;
@@ -136,9 +136,8 @@ header {
     height: calc(100vh - 80px);
     max-width: 100%;
     max-height: 100%;
-    overflow-y: scroll;
     overflow-x: hidden;
-    padding: 40px 30px 30px 30px;
+    padding: 30px 30px 30px 30px;
 }
 
     .main::-webkit-scrollbar-thumb {
@@ -382,7 +381,6 @@ header {
         width: 80px; /* Width when minimized */
         padding: 20px 0; /* Ensure padding remains */
     }
-
         #sidebar.collapsed .nav-link {
             padding: 10px 0; /* Adjust padding when minimized */
         }
@@ -418,6 +416,7 @@ header {
 
 #sidebarTitle.title {
     color: #343a40;
+
     font-size: 1.1rem;
     margin-right: auto;
 }
@@ -467,6 +466,12 @@ header {
     }
 
 .container {
+
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    transition: margin-left 0.3s ease;
+    justify-content: center; /* Centers horizontally */
     margin-left: 200px;
 }
 
@@ -475,6 +480,7 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 /* Global Styles */
 /* Login Container */
 /* Register Container */
@@ -721,9 +727,10 @@ body {
     text-decoration: none;
 }
 
-    .register-link:hover {
+.register-link:hover {
         text-decoration: underline;
-    }
+
+}
 
 /* Login UI - Image Section */
 .login-image {
@@ -787,3 +794,4 @@ body {
     animation-delay: 2s;
     z-index: 10;
 }
+

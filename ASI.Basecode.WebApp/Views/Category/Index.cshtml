@@ -6,45 +6,48 @@
     int totalPages = ViewData["TotalPages"] as int? ?? 1;
 
 }
+<div class="page-container">
+    <h1>Categories</h1>
+    <hr />
+    <p>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCategoryModal"> Create New </button>
+    </p>
 
-<h1>Categories</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-
-<table class="table table-striped table-hover">
-    <thead class="thead-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th class="text-center">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)  // Assuming Categories is a list in the CategoryViewModel
-        {
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("Edit", "Edit", new { CategoryId = item.CategoryId }, new { @class = "btn btn-sm btn-warning" }) |
-                    @Html.ActionLink("Delete", "Delete", new { CategoryId = item.CategoryId }, new { @class = "btn btn-sm btn-danger" })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th class="text-center">Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-<nav aria-label="Page navigation">
+        </thead>
+        <tbody>
+            @foreach (var item in Model)  // Assuming Categories is a list in the CategoryViewModel
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="text-center">
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#editCategoryModal" 
+                            data-id="@item.CategoryId" 
+                            data-name="@item.Name" 
+                            data-description="@item.Description">Edit</button>
+                        @Html.ActionLink("Delete", "Delete", new { CategoryId = item.CategoryId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+  
+  <nav aria-label="Page navigation">
     <ul class="pagination">
         @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
         {
@@ -86,4 +89,32 @@
     </ul>
 </nav>
 
+</div>
+   
+@{
+    await Html.RenderPartialAsync("Create", new ASI.Basecode.Services.ServiceModels.CategoryViewModel());
+    await Html.RenderPartialAsync("Edit", new ASI.Basecode.Services.ServiceModels.CategoryViewModel());
+}
+
+@section Scripts {
+    <script>
+       $(document).ready(function () {
+        $('#editCategoryModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var id = button.data('id'); // Extract info from data-* attributes
+            var name = button.data('name');
+            var description = button.data('description');
+
+              console.log(id, name, description); 
+
+
+            // Update the modal's content.
+            var modal = $(this);
+            modal.find('input[name="CategoryId"]').val(id);
+            modal.find('input[name="Name"]').val(name);
+            modal.find('input[name="Description"]').val(description);
+        });
+    });
+    </script>
+}
 
