@@ -4,6 +4,7 @@
     ViewData["Title"] = "Category Page";
     int currentPage = ViewData["CurrentPage"] as int? ?? 1;
     int totalPages = ViewData["TotalPages"] as int? ?? 1;
+
 }
 
 <h1>Categories</h1>
@@ -45,24 +46,44 @@
 
 <nav aria-label="Page navigation">
     <ul class="pagination">
-        @if (currentPage > 1)
+        @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
         {
             <li class="page-item">
                 <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage - 1)">Previous</a>
             </li>
         }
+
         @for (int i = 1; i <= totalPages; i++)
         {
-            <li class="page-item @(i == currentPage ? "active" : "")">
-                <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-            </li>
+            if (i <= 3 || i > totalPages - 3 || (i >= currentPage - 2 && i <= currentPage + 2))
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+            else if (i == 4 || i == totalPages - 3)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
         }
-        @if (currentPage < totalPages)
+
+        @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] < totalPages)
         {
             <li class="page-item">
                 <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage + 1)">Next</a>
             </li>
         }
+
+        <!-- Last Page link -->
+        @if (currentPage < totalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@totalPages">Last</a>
+            </li>
+        }
     </ul>
 </nav>
+
 
