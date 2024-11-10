@@ -27,7 +27,6 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Required Expense Description.")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Required Category Name.")]
         public string Name { get; set; }
     }
 }

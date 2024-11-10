@@ -55,6 +55,25 @@ namespace ASI.Basecode.Services.Services
             return data;
         }
 
+        public List<CategoryViewModel> FilterAll(string UserId, int pageNumber = 1, int pageSize = 5)
+        {
+            var serverUrl = _config.GetValue<string>("ServerUrl");
+            var data = _categoryRepository
+                .RetrieveAll()
+                .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new CategoryViewModel
+                {
+                    CategoryId = s.CategoryId,
+                    Name = s.Name,
+                    Description = s.Description
+                })
+                .ToList();
+
+            return data;
+        }
+
         public int GetTotalCategoryCount(string userId)
         {
             return _categoryRepository.RetrieveAll().Count(c => c.CreatedBy == userId);

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASI.Basecode.Services.ServiceModels.ExpenseViewModel>
+﻿@model ASI.Basecode.Services.ServiceModels.BaseExpenseViewModel
 
 @{
     ViewData["Title"] = "Expense Page";
@@ -16,25 +16,25 @@
     <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Amount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Category
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateCreated)
+                DateCreated
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.ListExpenseViewModel)
         {
                 <tr>
                     <td>
@@ -118,8 +118,8 @@
 </div>
 
 @{
-    await Html.RenderPartialAsync("Create", new ASI.Basecode.Services.ServiceModels.ExpenseViewModel());
-    await Html.RenderPartialAsync("Edit", new ASI.Basecode.Services.ServiceModels.ExpenseViewModel());
+    await Html.RenderPartialAsync("Create", Model.EntryForm);
+    await Html.RenderPartialAsync("Edit", Model.EntryForm);
 }
 
 @section Scripts {
@@ -169,11 +169,9 @@
                 });
             });
 
-           (document).ready(function () {
+            $(document).ready(function () {
                 $('#createExpenseModal').on('show.bs.modal', function () {
                 const apiUrl = '@Url.Action("RetrieveCategoriesFromUserId", "Category")';
-                $('#createCategoryForm')[0].reset();
-                // Clear validation error messages
                 $('.text-danger').empty();
 
                 fetch(apiUrl)
@@ -192,5 +190,5 @@
                     .catch(error => console.error('Error fetching categories:', error));
             });
         });
-        </script>
+       </script>
 }
