@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -35,11 +36,19 @@ namespace ASI.Basecode.WebApp.Controllers
             _categoryService = categoryService;
         }
         // GET: CategoryController
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1)
         {
-            var data = _categoryService.RetrieveAll(UserId);
+            int pageSize = 5; // Number of items per page
+            var data = _categoryService.RetrieveAll(UserId, pageNumber, pageSize);
+            var totalCategories = _categoryService.GetTotalCategoryCount(UserId);
+
+            var totalPages = (int)Math.Ceiling((double)totalCategories / pageSize);
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
+
             return View(data);
         }
+
 
         #region Get Methods
         [HttpGet]

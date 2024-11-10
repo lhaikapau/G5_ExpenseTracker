@@ -49,13 +49,16 @@ namespace ASI.Basecode.Services.Services
             _expenseRepository.AddExpense(newExpense);
         }
 
-        public List<ExpenseViewModel> RetrieveAll(string UserId)
+        public List<ExpenseViewModel> RetrieveAll(string UserId, int pageNumber = 1, int pageSize = 5)
         {
             var categories = _categoryRepository.RetrieveAll().ToDictionary(c => c.CategoryId, c => c.Name);
             var serverUrl = _config.GetValue<string>("ServerUrl");
             var data = _expenseRepository
                 .RetrieveAll()
                 .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .OrderBy(e => e.DateCreated)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .Select(s => new ExpenseViewModel
                 {
                     ExpenseId = s.ExpenseId,                  
@@ -73,6 +76,11 @@ namespace ASI.Basecode.Services.Services
 
             return data;
         }
+        public int GetTotalExpenseCount(string userId)
+        {
+            return _expenseRepository.RetrieveAll().Count(e => e.CreatedBy == userId);
+        }
+
 
         public ExpenseViewModel RetrieveExpense(int ExpenseId)
         {
