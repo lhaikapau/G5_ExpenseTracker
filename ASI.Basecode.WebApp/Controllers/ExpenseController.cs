@@ -32,11 +32,19 @@ namespace ASI.Basecode.WebApp.Controllers
             _expenseService = expenseService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
         {
-            var data = _expenseService.RetrieveAll(UserId);
+            var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+            var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+            var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
+
             return View(data);
         }
+
+
 
         #region Get Methods
         [HttpGet]

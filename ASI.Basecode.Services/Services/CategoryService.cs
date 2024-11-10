@@ -36,12 +36,14 @@ namespace ASI.Basecode.Services.Services
             _categoryRepository.AddCategory(newCategory);
         }
 
-        public List<CategoryViewModel> RetrieveAll(string UserId)
+        public List<CategoryViewModel> RetrieveAll(string UserId, int pageNumber = 1, int pageSize = 5)
         {
             var serverUrl = _config.GetValue<string>("ServerUrl");
             var data = _categoryRepository
                 .RetrieveAll()
                 .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .Select(s => new CategoryViewModel
                 {
                     CategoryId = s.CategoryId,
@@ -51,6 +53,11 @@ namespace ASI.Basecode.Services.Services
                 .ToList();
 
             return data;
+        }
+
+        public int GetTotalCategoryCount(string userId)
+        {
+            return _categoryRepository.RetrieveAll().Count(c => c.CreatedBy == userId);
         }
 
         public List<CategoryViewModel> RetrieveCategoriesFromUserId(string UserId)
