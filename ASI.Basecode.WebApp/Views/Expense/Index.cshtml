@@ -57,8 +57,8 @@
                                             data-title="@item.Title" 
                                             data-amount="@item.Amount" 
                                             data-description="@item.Description" 
-                                            data-datecreated="@item.DateCreated">
-                                            data-categoryid="@item.CategoryId">Edit</button>
+                                            data-datecreated="@item.DateCreated"
+                                            data-categoryid="@item.CategoryId">Edit
                                     </button>
                                     @Html.ActionLink("Delete", "Delete", new { ExpenseId = item.ExpenseId }, new { @class = "btn btn-sm", style = "background-color: #C14444; color: white; height: 38px; display: flex; justify-content: center; align-items: center;" })
                                 </div>
