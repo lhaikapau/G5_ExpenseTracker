@@ -85,8 +85,21 @@ namespace ASI.Basecode.WebApp.Controllers
         [HttpPost]
         public IActionResult Create(CategoryViewModel model)
         {
-            _categoryService.AddCategory(model, UserId);
-            return RedirectToAction("Index");
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                _categoryService.AddCategory(model, UserId);
+                return RedirectToAction("Index");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("Name", ex.Message);
+                return View(model);
+            }
         }
 
         [HttpPost]
@@ -94,11 +107,19 @@ namespace ASI.Basecode.WebApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model); // Return the model with validation errors
+                return View(model);
             }
 
-            _categoryService.UpdateCategory(model, UserId);
-            return RedirectToAction("Index");
+            try
+            {
+                _categoryService.UpdateCategory(model, UserId);
+                return RedirectToAction("Index");
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("Name", ex.Message);
+                return View(model);
+            }
         }
 
         [HttpPost]

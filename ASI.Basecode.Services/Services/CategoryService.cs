@@ -25,8 +25,19 @@ namespace ASI.Basecode.Services.Services
             _config = configuration;
         }
 
+        public bool IsCategoryNameExists(string name, string userId)
+        {
+            return _categoryRepository.RetrieveAll()
+                .Any(c => c.Name.ToLower() == name.ToLower() && c.CreatedBy == userId);
+        }
+
         public void AddCategory(CategoryViewModel model, string userId)
         {
+            if (IsCategoryNameExists(model.Name, userId))
+            {
+                throw new InvalidOperationException("A category with this name already exists.");
+            }
+
             var newCategory = new Category();
             newCategory.Name = model.Name;
             newCategory.Description = model.Description;
@@ -42,6 +53,7 @@ namespace ASI.Basecode.Services.Services
             var data = _categoryRepository
                 .RetrieveAll()
                 .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .OrderByDescending(c => c.DateCreated)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new CategoryViewModel
@@ -90,6 +102,15 @@ namespace ASI.Basecode.Services.Services
             var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(model.CategoryId)).FirstOrDefault();
             if (category != null)
             {
+                // Check if the new name exists for any other category
+                if (_categoryRepository.RetrieveAll()
+                    .Any(c => c.Name.ToLower() == model.Name.ToLower()
+                        && c.CreatedBy == userId
+                        && c.CategoryId != model.CategoryId))
+                {
+                    throw new InvalidOperationException("A category with this name already exists.");
+                }
+
                 category.Name = model.Name;
                 category.Description = model.Description;
                 category.DateUpdated = DateTime.Now;
@@ -107,5 +128,7 @@ namespace ASI.Basecode.Services.Services
                 _categoryRepository.DeleteCategory(category);
             }
         }
+
+
     }
 }
