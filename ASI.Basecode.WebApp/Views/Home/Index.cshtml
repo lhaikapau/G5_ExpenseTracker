@@ -38,6 +38,20 @@
                 </div>
             </div>
         </div>
+        <!-- Highest Expense Box -->
+        <div class="col-md-3">
+            <div class="d-flex flex-row widget summary expense border rounded p-4"
+                 style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; min-height: 140px;">
+                <div class="d-flex flex-column justify-content-center me-3">
+                    <i class="fas fa-arrow-up fa-2xl"></i>
+                </div>
+                <div class="d-flex flex-column m-auto">
+                    <span class="lead">Highest Expense</span>
+                    <h1 class="display-6 fw-bold">₱@ViewData["HighestExpenseAmount"]</h1>
+                    <p class="mb-0">@ViewData["HighestExpenseTitle"]</p>
+                </div>
+            </div>
+        </div>
 
         <!-- Category Breakdown Section with Donut Chart -->
         <div class="row mt-4">
@@ -142,12 +156,12 @@
                     listItem.style.borderLeft = `4px solid ${borderColor}`;
 
                     listItem.innerHTML = `
-                    <div>
-                        <h6 class="mb-0">${category.name}</h6>
-                        <small class="text-muted">₱${category.amount.toLocaleString()}</small>
-                    </div>
-                    <span class="badge rounded-pill" style="background-color: #4b0082; color: white;">${category.percentage.toFixed(1)}%</span>
-                `;
+                                    <div>
+                                        <h6 class="mb-0">${category.name}</h6>
+                                        <small class="text-muted">₱${category.amount.toLocaleString()}</small>
+                                    </div>
+                                    <span class="badge rounded-pill" style="background-color: #4b0082; color: white;">${category.percentage.toFixed(1)}%</span>
+                                `;
 
                     categoryList.appendChild(listItem);
                 });
@@ -159,28 +173,28 @@
         });
 
         function generateColors(count) {
-              var colors = [
-        '118, 217, 54',   // #76d936 (Bright Green)
-        '234, 180, 212',  // #eab4d4 (Light Pink)
-        '233, 210, 18',   // #e9d212 (Golden Yellow)
-        '45, 117, 210',   // #2d75d2 (Blue)
-        '74, 179, 181',   // #4ab3b5 (Teal)
-        '230, 230, 250',  // #e6e6fa (Lavender)
-        '255, 99, 132',   // #FF6384 (Coral)
-        '255, 159, 64',   // #FF9F40 (Orange)
-        '54, 162, 235',   // #36a2eb (Sky Blue)
-        '153, 102, 255',  // #9966ff (Purple)
-        '75, 192, 192',   // #4bc0c0 (Light Teal)
-        '255, 206, 86',   // #ffce56 (Yellow)
-        '255, 159, 64',   // #ff9f40 (Orange)
-        '255, 99, 71',    // #FF6347 (Tomato)
-        '173, 216, 230',  // #ADD8E6 (Light Blue)
-        '255, 105, 180',  // #FF69B4 (Hot Pink)
-        '244, 164, 96',   // #F4A460 (Sandy Brown)
-        '0, 255, 127',    // #00FF7F (Spring Green)
-        '255, 105, 180',  // #FF69B4 (Hot Pink)
-        '238, 130, 238'   // #EE82EE (Violet)
-    ];
+            var colors = [
+                '118, 217, 54',   // #76d936 (Bright Green)
+                '234, 180, 212',  // #eab4d4 (Light Pink)
+                '233, 210, 18',   // #e9d212 (Golden Yellow)
+                '45, 117, 210',   // #2d75d2 (Blue)
+                '74, 179, 181',   // #4ab3b5 (Teal)
+                '230, 230, 250',  // #e6e6fa (Lavender)
+                '255, 99, 132',   // #FF6384 (Coral)
+                '255, 159, 64',   // #FF9F40 (Orange)
+                '54, 162, 235',   // #36a2eb (Sky Blue)
+                '153, 102, 255',  // #9966ff (Purple)
+                '75, 192, 192',   // #4bc0c0 (Light Teal)
+                '255, 206, 86',   // #ffce56 (Yellow)
+                '255, 159, 64',   // #ff9f40 (Orange)
+                '255, 99, 71',    // #FF6347 (Tomato)
+                '173, 216, 230',  // #ADD8E6 (Light Blue)
+                '255, 105, 180',  // #FF69B4 (Hot Pink)
+                '244, 164, 96',   // #F4A460 (Sandy Brown)
+                '0, 255, 127',    // #00FF7F (Spring Green)
+                '255, 105, 180',  // #FF69B4 (Hot Pink)
+                '238, 130, 238'   // #EE82EE (Violet)
+            ];
 
             while (colors.length < count) {
                 // Loop back to start if there are more categories than predefined colors

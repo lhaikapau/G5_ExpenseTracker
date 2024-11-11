@@ -9,6 +9,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Text.Json;
+using System.Globalization;
 
 namespace ASI.Basecode.WebApp.Controllers
 {
@@ -39,35 +40,64 @@ namespace ASI.Basecode.WebApp.Controllers
         /// Returns Home View.
         /// </summary>
         /// <returns> Home View </returns>
-        public IActionResult Index(int? year, int? month)
+        // Controller
+        public IActionResult Index()
         {
-            var allExpenses = _expenseService.RetrieveAll(UserId);
-            var totalAmount = allExpenses.Sum(exp => exp.Amount ?? 0);
-            ViewData["TotalAmount"] = Math.Round(totalAmount, 2);  // Round to 2 decimal places
+            try
+            {
+                var allExpenses = _expenseService.RetrieveAll(UserId, pageSize: int.MaxValue).ToList();
 
-            // Calculate average monthly expenses using DateCreated
-            var distinctMonths = allExpenses
-                .Where(exp => exp.DateCreated != null)
-                .Select(exp => new { exp.DateCreated.Value.Year, exp.DateCreated.Value.Month })
-                .Distinct()
-                .Count();
-            var averageMonthlyExpense = distinctMonths > 0 ? totalAmount / distinctMonths : 0;
-            ViewData["AverageMonthlyExpense"] = Math.Round(averageMonthlyExpense, 2);  // Round to 2 decimal places
 
-            var categoryData = allExpenses
-                .GroupBy(e => e.Name)
-                .Select(g => new
+                // Calculate total amount using decimal for better precision
+                decimal totalAmount = allExpenses.Sum(exp => (decimal)(exp.Amount ?? 0.0));
+                ViewData["TotalAmount"] = decimal.Round(totalAmount, 2);
+
+                // Calculate average monthly expense
+                var expensesByMonth = allExpenses
+                    .Where(exp => exp.DateCreated.HasValue)
+                    .GroupBy(exp => new { exp.DateCreated.Value.Year, exp.DateCreated.Value.Month })
+                    .ToList();
+
+                var distinctMonths = expensesByMonth.Count;
+                decimal averageMonthlyExpense = distinctMonths > 0 ? totalAmount / distinctMonths : 0;
+                ViewData["AverageMonthlyExpense"] = decimal.Round(averageMonthlyExpense, 2);
+
+                // Get the highest expense title and amount
+                var highestExpense = allExpenses
+                    .OrderByDescending(exp => exp.Amount)
+                    .FirstOrDefault();
+
+                if (highestExpense != null)
                 {
-                    name = g.Key,
-                    amount = g.Sum(e => e.Amount ?? 0),
-                    percentage = (g.Sum(e => e.Amount ?? 0) / totalAmount) * 100
-                })
-                .OrderByDescending(x => x.amount)
-                .ToList();
+                    ViewData["HighestExpenseTitle"] = highestExpense.Title;
+                    ViewData["HighestExpenseAmount"] = decimal.Round((decimal)(highestExpense.Amount ?? 0.0), 2);
+                }
 
-            ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
 
-            return View();
+                // Group by category - following the same pattern as your Report controller
+                var categoryData = allExpenses
+                    .GroupBy(e => e.Name)
+                    .Select(g => new
+                    {
+                        name = g.Key,
+                        amount = (decimal)g.Sum(e => e.Amount ?? 0.0),
+                        percentage = totalAmount > 0
+                            ? decimal.Round((decimal)g.Sum(e => e.Amount ?? 0.0) / totalAmount * 100M, 1)
+                            : 0M
+                    })
+                    .OrderByDescending(x => x.amount)
+                    .ToList();
+
+                // Serialize using the same method as the Report controller
+                ViewData["CategoryData"] = JsonSerializer.Serialize(categoryData);
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Log the error
+                return View("Error");
+            }
         }
 
 
