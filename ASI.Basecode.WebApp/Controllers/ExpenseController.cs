@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 
 namespace ASI.Basecode.WebApp.Controllers
@@ -32,25 +33,56 @@ namespace ASI.Basecode.WebApp.Controllers
             _expenseService = expenseService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber = 1, int pageSize = 5)
         {
-            var data = _expenseService.RetrieveAll(UserId);
-            return View(data);
+            BaseExpenseViewModel viewModel = new BaseExpenseViewModel();
+            var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+            var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+            var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
+            viewModel.ListExpenseViewModel = data;
+            viewModel.EntryForm = new ExpenseViewModel();
+
+            return View(viewModel);
         }
+
 
         #region Get Methods
         [HttpGet]
 
-        public IActionResult Create()
+        public IActionResult Create(int pageNumber = 1, int pageSize = 5)
         {
-            return View();
+            BaseExpenseViewModel viewModel = new BaseExpenseViewModel();
+            var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+            var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+            var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
+            viewModel.ListExpenseViewModel = data;
+            viewModel.EntryForm = new ExpenseViewModel();
+
+            return View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Edit(int ExpenseId)
+        public IActionResult Edit(int ExpenseId, int pageNumber = 1, int pageSize = 5)
         {
-            var data = _expenseService.RetrieveExpense(ExpenseId);
-            return View(data);
+            BaseExpenseViewModel viewModel = new BaseExpenseViewModel();
+            var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+            var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+            var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+            ViewData["CurrentPage"] = pageNumber;
+            ViewData["TotalPages"] = totalPages;
+            
+            var existingExpense = _expenseService.RetrieveExpense(ExpenseId);
+            viewModel.ListExpenseViewModel = data;
+            viewModel.EntryForm = existingExpense;
+
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -68,6 +100,7 @@ namespace ASI.Basecode.WebApp.Controllers
 
         public IActionResult Create(ExpenseViewModel model)
         {
+            BaseExpenseViewModel viewModel = new BaseExpenseViewModel();
             try
             {
                 _expenseService.AddExpense(model, UserId);
@@ -76,13 +109,16 @@ namespace ASI.Basecode.WebApp.Controllers
             catch (ArgumentException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-                return View(model); // Return the view with validation errors
+                viewModel.EntryForm = model;
+                return View("Index", viewModel); // Return the view with validation errors
             }
         }
 
         [HttpPost]
-        public IActionResult Edit(ExpenseViewModel model)
+        public IActionResult Edit(ExpenseViewModel model, int pageNumber = 1, int pageSize = 5)
         {
+            BaseExpenseViewModel viewModel = new BaseExpenseViewModel();
+
             if (!ModelState.IsValid)
             {
                 // Log the validation errors for debugging
@@ -90,7 +126,15 @@ namespace ASI.Basecode.WebApp.Controllers
                 {
                     Console.WriteLine(error.ErrorMessage);
                 }
-                return View(model); // Return the model with validation errors
+                var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+                var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+                var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+                ViewData["CurrentPage"] = pageNumber;
+                ViewData["TotalPages"] = totalPages;
+                viewModel.ListExpenseViewModel = data;
+                viewModel.EntryForm = model;
+                return View("Index", viewModel); // Return the model with validation errors
             }
 
             try
@@ -102,7 +146,15 @@ namespace ASI.Basecode.WebApp.Controllers
                 ModelState.AddModelError(string.Empty, "Unable to update expense. Please try again.");
                 // Log the exception
                 Console.WriteLine(ex.Message);
-                return View(model);
+                var data = _expenseService.RetrieveAll(UserId, pageNumber, pageSize);
+                var totalExpenses = _expenseService.GetTotalExpenseCount(UserId);
+
+                var totalPages = (int)Math.Ceiling((double)totalExpenses / pageSize);
+                ViewData["CurrentPage"] = pageNumber;
+                ViewData["TotalPages"] = totalPages;
+                viewModel.ListExpenseViewModel = data;
+                viewModel.EntryForm = model;
+                return View("Index", viewModel);
             }
 
             return RedirectToAction("Index");

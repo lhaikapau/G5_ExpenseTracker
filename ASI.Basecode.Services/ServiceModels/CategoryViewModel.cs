@@ -13,9 +13,11 @@ namespace ASI.Basecode.Services.ServiceModels
 
         [Required(ErrorMessage = "Required Category Name.")]
         public string Name { get; set; }
+      
         public string CreatedBy { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+
 
         [Required(ErrorMessage = "Required Category Description.")]
         public string Description { get; set; }

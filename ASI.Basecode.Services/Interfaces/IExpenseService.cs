@@ -11,7 +11,8 @@ namespace ASI.Basecode.Services.Interfaces
     {
         void AddExpense(ExpenseViewModel model, string userId);
 
-        List<ExpenseViewModel> RetrieveAll(string UserId);
+        List<ExpenseViewModel> RetrieveAll(string UserId, int pageNumber = 1, int pageSize = 5);
+        int GetTotalExpenseCount(string userId);
         ExpenseViewModel RetrieveExpense(int ExpenseId);
         void UpdateExpense(ExpenseViewModel model, string userId);
 

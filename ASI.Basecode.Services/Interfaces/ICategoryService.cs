@@ -11,12 +11,14 @@ namespace ASI.Basecode.Services.Interfaces
     {
         void AddCategory(CategoryViewModel model, string userId);
 
-        List<CategoryViewModel> RetrieveAll(string UserId);
+        List<CategoryViewModel> RetrieveAll(string userId, int pageNumber = 1, int pageSize = 5);
+        int GetTotalCategoryCount(string userId);
         CategoryViewModel RetrieveCategory(int CategoryId);
 
         void UpdateCategory(CategoryViewModel model, string userId);
 
         void DeleteCategory(int CategoryId);
         List<CategoryViewModel> RetrieveCategoriesFromUserId(string UserId);
+
     }
 }

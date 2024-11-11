@@ -17,6 +17,7 @@ namespace ASI.Basecode.Services.ServiceModels
 
         [Required(ErrorMessage = "Required Amount input.")]
         public double? Amount { get; set; }
+
         public string CreatedBy { get; set; }
 
         [Required(ErrorMessage = "Required Date.")]
@@ -26,7 +27,6 @@ namespace ASI.Basecode.Services.ServiceModels
         [Required(ErrorMessage = "Required Expense Description.")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Required Category Name.")]
         public string Name { get; set; }
     }
 }
