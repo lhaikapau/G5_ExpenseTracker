@@ -33,6 +33,7 @@ namespace ASI.Basecode.Services.Services
             newCategory.CreatedBy = userId;
             newCategory.DateCreated = DateTime.Now;
             newCategory.DateUpdated = DateTime.Now;
+            newCategory.DateDeleted = null;
             _categoryRepository.AddCategory(newCategory);
         }
 
@@ -41,7 +42,7 @@ namespace ASI.Basecode.Services.Services
             var serverUrl = _config.GetValue<string>("ServerUrl");
             var data = _categoryRepository
                 .RetrieveAll()
-                .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Where(c => c.CreatedBy == UserId && c.DateDeleted == null) // Filter by userId
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new CategoryViewModel
@@ -60,7 +61,7 @@ namespace ASI.Basecode.Services.Services
             var serverUrl = _config.GetValue<string>("ServerUrl");
             var data = _categoryRepository
                 .RetrieveAll()
-                .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Where(c => c.CreatedBy == UserId && c.DateDeleted == null) // Filter by userId
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new CategoryViewModel
@@ -76,12 +77,12 @@ namespace ASI.Basecode.Services.Services
 
         public int GetTotalCategoryCount(string userId)
         {
-            return _categoryRepository.RetrieveAll().Count(c => c.CreatedBy == userId);
+            return _categoryRepository.RetrieveAll().Count(c => c.CreatedBy == userId && c.DateDeleted == null);
         }
 
         public List<CategoryViewModel> RetrieveCategoriesFromUserId(string UserId)
         {
-            var data = _categoryRepository.RetrieveAll().Where(x => x.CreatedBy == UserId)
+            var data = _categoryRepository.RetrieveAll().Where(x => x.CreatedBy == UserId && x.DateDeleted == null)
                 .Select(s => new CategoryViewModel
                 {
                     CategoryId = s.CategoryId,
@@ -94,7 +95,7 @@ namespace ASI.Basecode.Services.Services
 
         public CategoryViewModel RetrieveCategory(int CategoryId)
         {
-            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId)).Select(s => new CategoryViewModel
+            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId) && x.DateDeleted == null).Select(s => new CategoryViewModel
             {
                 CategoryId = s.CategoryId,
                 Name = s.Name,
@@ -120,10 +121,12 @@ namespace ASI.Basecode.Services.Services
 
         public void DeleteCategory(int CategoryId)
         {
-            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId)).FirstOrDefault();
+            var category = _categoryRepository.RetrieveAll().Where(x => x.CategoryId.Equals(CategoryId) && x.DateDeleted == null).FirstOrDefault();
             if (category != null)
             {
-                _categoryRepository.DeleteCategory(category);
+                category.DateDeleted = DateTime.Now;    
+
+                _categoryRepository.UpdateCategory(category);
             }
         }
     }

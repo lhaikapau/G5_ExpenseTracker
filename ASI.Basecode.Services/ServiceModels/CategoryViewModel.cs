@@ -17,6 +17,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public string CreatedBy { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
 
         [Required(ErrorMessage = "Required Category Description.")]

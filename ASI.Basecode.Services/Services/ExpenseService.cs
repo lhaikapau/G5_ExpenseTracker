@@ -46,6 +46,7 @@ namespace ASI.Basecode.Services.Services
             newExpense.DateCreated = model.DateCreated.Value; 
             newExpense.DateUpdated = DateTime.Now;
             newExpense.Description = model.Description;
+            newExpense.DateDeleted = null;
             _expenseRepository.AddExpense(newExpense);
         }
 
@@ -55,7 +56,7 @@ namespace ASI.Basecode.Services.Services
             var serverUrl = _config.GetValue<string>("ServerUrl");
             var data = _expenseRepository
                 .RetrieveAll()
-                .Where(c => c.CreatedBy == UserId) // Filter by userId
+                .Where(c => c.CreatedBy == UserId && c.DateDeleted == null) // Filter by userId
                 .OrderBy(e => e.DateCreated)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -78,13 +79,13 @@ namespace ASI.Basecode.Services.Services
         }
         public int GetTotalExpenseCount(string userId)
         {
-            return _expenseRepository.RetrieveAll().Count(e => e.CreatedBy == userId);
+            return _expenseRepository.RetrieveAll().Count(e => e.CreatedBy == userId && e.DateDeleted == null);
         }
 
 
         public ExpenseViewModel RetrieveExpense(int ExpenseId)
         {
-            var expense = _expenseRepository.RetrieveAll().Where(x => x.ExpenseId.Equals(ExpenseId)).Select(s => new ExpenseViewModel
+            var expense = _expenseRepository.RetrieveAll().Where(x => x.ExpenseId.Equals(ExpenseId) && x.DateDeleted == null).Select(s => new ExpenseViewModel
             {
                 ExpenseId = s.ExpenseId,
                 Title = s.Title,
@@ -137,10 +138,11 @@ namespace ASI.Basecode.Services.Services
         }
         public void DeleteExpense(int ExpenseId)
         {
-            var expense = _expenseRepository.RetrieveAll().Where(x => x.ExpenseId.Equals(ExpenseId)).FirstOrDefault();
+            var expense = _expenseRepository.RetrieveAll().Where(x => x.ExpenseId.Equals(ExpenseId) && x.DateDeleted == null).FirstOrDefault();
             if (expense != null)
             {
-                _expenseRepository.DeleteExpense(expense);
+                expense.DateDeleted = DateTime.Now;
+                _expenseRepository.UpdateExpense(expense);
             }
         }
 
@@ -153,7 +155,8 @@ namespace ASI.Basecode.Services.Services
                 .Where(c => c.CreatedBy == userId &&
                           c.DateCreated.HasValue &&
                           c.DateCreated.Value.Year == year &&
-                          c.DateCreated.Value.Month == month)
+                          c.DateCreated.Value.Month == month &&
+                          c.DateDeleted == null)
                 .Select(s => new ExpenseViewModel
                 {
                     ExpenseId = s.ExpenseId,

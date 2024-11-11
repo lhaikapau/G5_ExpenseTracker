@@ -25,7 +25,8 @@ namespace ASI.Basecode.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Addr=CPAU\\MSSQLSERVER01; database=AsiBasecodeDB; Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Addr=MARS\\SQLEXPRESS; database=AsiBasecodeDB; Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
             }
         }
 
@@ -40,6 +41,8 @@ namespace ASI.Basecode.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateDeleted).HasColumnType("datetime");
 
                 entity.Property(e => e.DateUpdated).HasColumnType("datetime");
 
@@ -61,6 +64,8 @@ namespace ASI.Basecode.Data
                     .IsUnicode(false);
 
                 entity.Property(e => e.DateCreated).HasColumnType("datetime");
+
+                entity.Property(e => e.DateDeleted).HasColumnType("datetime");
 
                 entity.Property(e => e.DateUpdated).HasColumnType("datetime");
 
