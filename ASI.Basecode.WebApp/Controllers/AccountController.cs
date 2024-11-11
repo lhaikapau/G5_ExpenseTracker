@@ -58,9 +58,8 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         /// <summary>
-        /// Login Method
+        /// Landing Page
         /// </summary>
-        /// <returns>Created response view</returns
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Landing()
@@ -68,6 +67,10 @@ namespace ASI.Basecode.WebApp.Controllers
             return this.View();
         }
 
+        /// <summary>
+        /// Login Method
+        /// </summary>
+        /// <returns>Created response view</returns
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Login()
