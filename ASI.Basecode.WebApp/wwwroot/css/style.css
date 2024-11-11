@@ -919,4 +919,8 @@ body {
     z-index: 10;
     opacity: 0.4; /* Set transparency to 50% */
 }
+.modal-backdrop {
+    background-color: rgba(64, 64, 64, 0.7); /* Darker gray with higher opacity */
+}
+
 
