@@ -382,6 +382,7 @@ header {
         width: 80px; /* Width when minimized */
         padding: 20px 0; /* Ensure padding remains */
     }
+
         #sidebar.collapsed .nav-link {
             padding: 10px 0; /* Adjust padding when minimized */
         }
@@ -411,12 +412,12 @@ header {
     padding: 15px;
     font-size: 1.25rem;
     font-weight: bold;
-    background-color: #f8f9fa; 
-    border-bottom: 1px solid #ddd; 
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
 }
 
 #sidebarTitle.title {
-    color: #343a40; 
+    color: #343a40;
     font-size: 1.1rem;
     margin-right: auto;
 }
@@ -425,10 +426,10 @@ header {
 #toggleSidebar {
     padding: 5px 10px;
     font-size: 0.9rem;
-    color: #6c757d; 
-    border: 1px solid #ced4da; 
+    color: #6c757d;
+    border: 1px solid #ced4da;
     border-radius: 4px;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -436,7 +437,7 @@ header {
 
     #toggleSidebar:hover {
         color: #0056b3;
-        background-color: #e2e6ea; 
+        background-color: #e2e6ea;
     }
 
     #toggleSidebar i {
@@ -444,26 +445,25 @@ header {
     }
 
 .side_nav {
-    list-style-type: none; 
-    padding: 0; 
-    margin: 0; 
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .nav-item {
-    margin: 0; 
+    margin: 0;
 }
 
 .nav-link {
-    display: block; 
-    padding: 10px 20px; 
+    display: block;
+    padding: 10px 20px;
     color: black;
-    text-decoration: none; 
-    transition: background-color 0.3s; 
-
+    text-decoration: none;
+    transition: background-color 0.3s;
 }
 
     .nav-link:hover {
-        background-color: rgba(0, 0, 0, 0.1); 
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
 .container {
@@ -471,9 +471,9 @@ header {
 }
 
 .side_nav .nav-link {
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Register Container */
@@ -722,7 +722,7 @@ body {
 
     .register-link:hover {
         text-decoration: underline;
-}
+    }
 
 /* Login UI - Image Section */
 .login-image {
@@ -795,21 +795,24 @@ body {
     text-align: middle;
     margin-bottom: 30px;
 }
+
 .card-body donutChart {
     width: 500px;
     margin-left: 300px;
-    
 }
+
 .card {
     width: 450px;
     border-radius: 4px 4px 0 0;
 }
+
 .card-header {
     background-color: #b2b2d3;
     color: #483D8B; /* Text color set to #483D8B */
     font-weight: bold; /* Ensures the text is bold */
     border-radius: 4px 4px 0 0; /* Rounded top edges */
 }
+
 .homepage-container {
     max-width: 1500px;
     width: 1000px;
@@ -828,6 +831,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
     .scrollable-list::-webkit-scrollbar {
         width: 8px; /* Width of the scrollbar */
     }
@@ -848,12 +852,15 @@ body {
         .scrollable-list::-webkit-scrollbar-thumb:hover {
             background-color: #6a4b8d; /* Lighter purple when hovered */
         }
+
 .index-body {
     background-color: #b3acdb;
 }
+
 .logo-move-up {
     margin-top: -10px; /* Adjust this value as needed */
 }
+
 .page-container {
     width: 1655px;
     margin-left: 300px;
@@ -883,6 +890,7 @@ body {
 .fadeIn {
     animation-name: fadeIn;
 }
+
 .category-display {
     font-size: 50px !important;
     font-weight: bold !important;
@@ -890,6 +898,7 @@ body {
     margin-bottom: 30px;
     margin-left: -100px;
 }
+
 .expense-display {
     font-size: 50px !important;
     font-weight: bold !important;
@@ -919,4 +928,3 @@ body {
     z-index: 10;
     opacity: 0.4; /* Set transparency to 50% */
 }
-
