@@ -10,7 +10,8 @@
     <div class="container">
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card" style="width: 90%; height: 600px; margin: 0 auto; border: none;">
+                <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
+
                     <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                         <h5 class="card-title mb-0">Trend Expenses Trend</h5>
                         <div class="d-flex justify-content-end">
@@ -21,7 +22,7 @@
                                     <option value="@y" selected="@isSelected">@y</option>
                                 }
                             </select>
-                            <button id="filterButton" class="btn btn-primary ms-2" style="width: auto; margin-top:-25px;">Filter</button>
+                            <button id="filterButton" class="btn btn-primary ms-2" style="background-color: #4b0082; color: white; width: auto; margin-top:-25px; margin-left: 50px;">Filter</button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -32,7 +33,8 @@
         </div>
     </div>
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
+
     </div>
 </body>
 
@@ -143,7 +145,6 @@
             '233, 210, 18',   // #e9d212 (Golden Yellow)
             '45, 117, 210',   // #2d75d2 (Blue)
             '74, 179, 181',   // #4ab3b5 (Teal)
-            '230, 230, 250',  // #e6e6fa (Lavender)
             '255, 99, 132',   // #FF6384 (Coral)
             '255, 159, 64',   // #FF9F40 (Orange)
             '54, 162, 235',   // #36a2eb (Sky Blue)
