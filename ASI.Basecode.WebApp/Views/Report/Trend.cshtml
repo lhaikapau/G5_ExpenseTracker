@@ -11,7 +11,6 @@
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card" style="width: 160%; height: 800px; margin-left: -195px; margin-top: 70px; border: none;">
-
                     <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                         <h5 class="card-title mb-0">Trend Expenses Trend</h5>
                         <div class="d-flex justify-content-end">
@@ -34,7 +33,6 @@
     </div>
     <div>
         <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 15px;">Back to List</a>
-
     </div>
 </body>
 
@@ -124,21 +122,21 @@
                     },
                     barPercentage: 0.8,
                     categoryPercentage: 0.9
-                }
-            });
+                    }
+                });
 
-            // Year filter functionality
+                // Year filter functionality
             document.getElementById('filterButton').addEventListener('click', function () {
                 var selectedYear = document.getElementById('yearSelect').value;
                 window.location.href = `?year=${selectedYear}`;
-            });
+                });
 
-        } catch (error) {
+            } catch (error) {
             console.error('Error creating chart:', error);
-        }
-    });
+            }
+        });
 
-    function generateColor(index) {
+        function generateColor(index) {
         const colors = [
             '118, 217, 54',   // #76d936 (Bright Green)
             '234, 180, 212',  // #eab4d4 (Light Pink)

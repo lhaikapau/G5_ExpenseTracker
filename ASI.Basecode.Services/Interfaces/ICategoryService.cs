@@ -19,6 +19,7 @@ namespace ASI.Basecode.Services.Interfaces
 
         void DeleteCategory(int CategoryId);
         List<CategoryViewModel> RetrieveCategoriesFromUserId(string UserId);
+        List<CategoryViewModel> FilterByName(string userId, string searchTerm, int pageNumber = 1, int pageSize = 5);
 
     }
 }
