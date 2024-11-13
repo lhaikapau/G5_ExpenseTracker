@@ -13,12 +13,12 @@
 
         <hr />
         <p>
-            <button type="button" class="btn" style="background-color: #9370DB; color: white; margin-left: 700px;" data-toggle="modal" data-target="#createCategoryModal">Create New</button>
+            <button type="button" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white;; color: white; margin-left: 700px;" data-toggle="modal" data-target="#createCategoryModal">Create New</button>
 
         </p>
         <div style="width: 100%; height: 600px; overflow-y: auto;">
             <table class="table table-bordered table-hover" style="background-color: white; margin-top: -5px; width:100%;">
-                <thead style="background-color: #483D8B; color: white;">
+                <thead style="background-color: #483D8B !important; color: white !important;">
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Name)</th>
                         <th>@Html.DisplayNameFor(model => model.Description)</th>
@@ -44,50 +44,50 @@
                 </tbody>
             </table>
         </div>
-       <nav aria-label="Page navigation">
-          <ul class="pagination">
-          @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
-          {
-              <li class="page-item">
-                  <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage - 1)">Previous</a>
-              </li>
-          }
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage - 1)">Previous</a>
+                    </li>
+                }
 
-          @for (int i = 1; i <= totalPages; i++)
-          {
-              if (i <= 3 || i > totalPages - 3 || (i >= currentPage - 2 && i <= currentPage + 2))
-              {
-                  <li class="page-item @(i == currentPage ? "active" : "")">
-                      <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-                  </li>
-              }
-              else if (i == 4 || i == totalPages - 3)
-              {
-                  <li class="page-item disabled">
-                      <span class="page-link">...</span>
-                  </li>
-              }
-          }
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    if (i <= 3 || i > totalPages - 3 || (i >= currentPage - 2 && i <= currentPage + 2))
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                        </li>
+                    }
+                    else if (i == 4 || i == totalPages - 3)
+                    {
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    }
+                }
 
-          @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] < totalPages)
-          {
-              <li class="page-item">
-                  <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage + 1)">Next</a>
-              </li>
-          }
+                @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage + 1)">Next</a>
+                    </li>
+                }
 
-          <!-- Last Page link -->
-          @if (currentPage < totalPages)
-          {
-              <li class="page-item">
-                  <a class="page-link" asp-action="Index" asp-route-pageNumber="@totalPages">Last</a>
-              </li>
-          }
-      </ul>
-    </nav>
+                <!-- Last Page link -->
+                @if (currentPage < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@totalPages">Last</a>
+                    </li>
+                }
+            </ul>
+        </nav>
     </div>
 </body>
-   
+
 @{
     await Html.RenderPartialAsync("Create", new ASI.Basecode.Services.ServiceModels.CategoryViewModel());
     await Html.RenderPartialAsync("Edit", new ASI.Basecode.Services.ServiceModels.CategoryViewModel());
@@ -95,23 +95,22 @@
 
 @section Scripts {
     <script>
-       $(document).ready(function () {
-        $('#editCategoryModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget); // Button that triggered the modal
-            var id = button.data('id'); // Extract info from data-* attributes
-            var name = button.data('name');
-            var description = button.data('description');
+        $(document).ready(function () {
+            $('#editCategoryModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var id = button.data('id'); // Extract info from data-* attributes
+                var name = button.data('name');
+                var description = button.data('description');
 
-              console.log(id, name, description); 
+                console.log(id, name, description);
 
 
-            // Update the modal's content.
-            var modal = $(this);
-            modal.find('input[name="CategoryId"]').val(id);
-            modal.find('input[name="Name"]').val(name);
-            modal.find('input[name="Description"]').val(description);
+                // Update the modal's content.
+                var modal = $(this);
+                modal.find('input[name="CategoryId"]').val(id);
+                modal.find('input[name="Name"]').val(name);
+                modal.find('input[name="Description"]').val(description);
+            });
         });
-    });
     </script>
 }
-

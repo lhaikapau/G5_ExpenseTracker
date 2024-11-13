@@ -43,7 +43,7 @@ namespace ASI.Basecode.Services.Services
             newExpense.Title = model.Title;
             newExpense.Amount = model.Amount;
             newExpense.CreatedBy = userId;
-            newExpense.DateCreated = model.DateCreated.Value; 
+            newExpense.DateCreated = model.DateCreated.Value;
             newExpense.DateUpdated = DateTime.Now;
             newExpense.Description = model.Description;
             newExpense.DateDeleted = null;
@@ -62,18 +62,19 @@ namespace ASI.Basecode.Services.Services
                 .Take(pageSize)
                 .Select(s => new ExpenseViewModel
                 {
-                    ExpenseId = s.ExpenseId,                  
+                    ExpenseId = s.ExpenseId,
                     Title = s.Title,
                     Description = s.Description,
                     Amount = s.Amount,
                     CategoryId = s.CategoryId,
-                    DateCreated = s.DateCreated,
+                    DateCreated = s.DateCreated != null ? s.DateCreated : DateTime.Now,
                     Name = s.CategoryId.HasValue && categories.ContainsKey(s.CategoryId.Value)
                         ? categories[s.CategoryId.Value]
                         : "Unknown"  // Display "Unknown" if the category doesn't exist
 
                 })
                 .ToList();
+
 
             return data;
         }
@@ -125,7 +126,7 @@ namespace ASI.Basecode.Services.Services
                     }
 
                     _expenseRepository.UpdateExpense(expense);
-                } 
+                }
 
 
             }

@@ -1,15 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Report Page";
 }
+
 <div class="container">
     <!-- Month Comparison Section -->
     <div class="row mt-4">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
+                <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                     <h5 class="card-title mb-0">Month-to-Month Comparison</h5>
                     <div class="d-flex justify-content-end">
-                        <select id="monthSelect" class="form-select me-2" style="width: auto;">
+                        <select id="monthSelect" class="form-select me-2" style="width: auto; margin-top: -25px;">
                             @for (int m = 1; m <= 12; m++)
                             {
                                 var isSelected = m == (int?)ViewData["CurrentMonth"];
@@ -18,7 +19,7 @@
                                 </option>
                             }
                         </select>
-                        <select id="compareMonthSelect" class="form-select me-2" style="width: auto;">
+                        <select id="compareMonthSelect" class="form-select me-2" style="width: auto; margin-top: -25px;">
                             @for (int m = 1; m <= 12; m++)
                             {
                                 var isSelected = m == (int?)ViewData["CompareMonth"];
@@ -27,25 +28,26 @@
                                 </option>
                             }
                         </select>
-                        <select id="yearSelect" class="form-select" style="width: auto;">
+                        <select id="yearSelect" class="form-select" style="width: auto; margin-top: -25px;">
                             @for (int y = DateTime.Now.Year; y >= 2000; y--)
                             {
                                 var isSelected = y == (int?)ViewData["CurrentYear"];
                                 <option value="@y" selected="@isSelected">@y</option>
                             }
                         </select>
-                        <button id="compareButton" class="btn btn-primary ms-2">Compare</button>
+                        <button id="compareButton" class="btn" style="background-color: #4b0082; color: white; width: auto; margin-top: -25px; margin-left: 50px;">Compare</button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <canvas id="comparisonChart" style="height: 300px;"></canvas>
+                <div class="card-body" style="height: 100%; padding: 5;">
+                    <canvas id="comparisonChart" style="width: 95% !important; height: 100% !important;"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -55,7 +57,6 @@
             var categoryData = JSON.parse('@Html.Raw(ViewData["CategoryData"])');
             var monthlyCategoryData = JSON.parse('@Html.Raw(ViewData["MonthlyCategoryData"])');
             var comparisonData = JSON.parse('@Html.Raw(ViewData["ComparisonData"])');
-
 
             // Comparison Chart
             if (comparisonData && comparisonData.length > 0) {
@@ -72,21 +73,20 @@
                             {
                                 label: document.getElementById('monthSelect').options[document.getElementById('monthSelect').selectedIndex].text,
                                 data: currentMonthData,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
+                                backgroundColor: 'rgba(118, 217, 54, 1)', // Bright Green (#76d936)
+                                borderWidth: 0 // No border
                             },
                             {
                                 label: document.getElementById('compareMonthSelect').options[document.getElementById('compareMonthSelect').selectedIndex].text,
                                 data: compareMonthData,
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                borderWidth: 1
+                                backgroundColor: 'rgba(234, 180, 212, 1)', // Light Pink (#eab4d4)
+                                borderWidth: 0 // No border
                             }
                         ]
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: false, // Ensures it uses 100% height and width
                         scales: {
                             y: { beginAtZero: true }
                         },
@@ -113,22 +113,4 @@
             console.error('Error creating charts:', error);
         }
     });
-
-    function generateColors(count) {
-        var colors = [
-            '255, 99, 132',
-            '54, 162, 235',
-            '255, 206, 86',
-            '75, 192, 192',
-            '153, 102, 255',
-            '255, 159, 64'
-        ];
-
-        while (colors.length < count) {
-            colors.push(`${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`);
-        }
-
-        return colors;
-    }
 </script>
-
