@@ -1,46 +1,47 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.ExpenseViewModel
 
 <div class="modal fade" id="editExpenseModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog" role="document" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div class="modal-content" style="background-color: #f4f4f9; border-radius: 8px; width: 500px;">
+            <div class="modal-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white;">
+                <h5 class="modal-title" id="editModalLabel" style="font-weight: bold; color: white;">Edit Expense</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #483D8B;">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 20px;">
                 <form asp-action="Edit" enctype="multipart/form-data" id="editExpenseForm">
-                     <input type="hidden" name="ExpenseId" asp-for="ExpenseId" />
+                    <input type="hidden" name="ExpenseId" asp-for="ExpenseId" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group mb-3">
-                        <label asp-for="Title" class="control-label"></label>
-                        <input name="Title" asp-for="Title" class="form-control" />
+                        <label asp-for="Title" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
+                        <input name="Title" asp-for="Title" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="Amount" class="control-label"></label>
-                        <input name="Amount" asp-for="Amount" class="form-control" />
+                        <label asp-for="Amount" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
+                        <input name="Amount" asp-for="Amount" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input name="Description" asp-for="Description" class="form-control" />
+                        <label asp-for="Description" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
+                        <textarea name="Description" asp-for="Description" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB; resize: vertical;"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="DateCreated" class="control-label"></label>
-                        <input name="DateCreated" asp-for="DateCreated" class="form-control" type="date" />
+                        <label asp-for="DateCreated" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
+                        <input name="DateCreated" asp-for="DateCreated" class="form-control" type="date" style="border-radius: 5px; border: 1px solid #9370DB;" />
                         <span asp-validation-for="DateCreated" class="text-danger"></span>
                     </div>
                     <div class="form-group mb-3">
-                        <label asp-for="CategoryId" class="control-label"></label>
-                        <select name="CategoryId" asp-for="CategoryId" class="form-control" id="categoryDropdown">
+                        <label asp-for="CategoryId" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
+                        <select name="CategoryId" asp-for="CategoryId" class="form-control" id="categoryDropdown" style="border-radius: 5px; border: 1px solid #9370DB;">
                             <option value="">-- Select Category --</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
-                    <div class="create-btn">
-                        <input type="submit" value="Edit" class="btn btn-primary" />
+                    <div class="create-btn" style="text-align: center;">
+                        <input type="submit" value="Edit" class="btn btn-primary" style="background-color: #483D8B; border: none; width: 100px;" />
                     </div>
                 </form>
             </div>
@@ -49,7 +50,7 @@
 </div>
 
 @section Scripts {
-  @{
-      await Html.RenderPartialAsync("_ValidationScriptsPartial");
-  }
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
