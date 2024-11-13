@@ -173,5 +173,43 @@ namespace ASI.Basecode.Services.Services
                 .ToList();
         }
 
+        public List<ExpenseViewModel> FilterByTitle(string userId, string searchTerm, int pageNumber = 1, int pageSize = 5)
+        {
+            var categories = _categoryRepository.RetrieveAll().ToDictionary(c => c.CategoryId, c => c.Name);
+            var query = _expenseRepository
+                .RetrieveAll()
+                .Where(e => e.CreatedBy == userId && e.DateDeleted == null);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(e => e.Title.ToLower().Contains(searchTerm.ToLower()) ||
+                                         (e.Description != null && e.Description.ToLower().Contains(searchTerm.ToLower())) ||
+                                         (e.Amount.ToString().Contains(searchTerm)) || // Search by amount
+                                         (e.CategoryId.HasValue && categories.ContainsKey(e.CategoryId.Value) &&
+                                          categories[e.CategoryId.Value].ToLower().Contains(searchTerm.ToLower())) || // Search by category name
+                                         (e.DateCreated != null && e.DateCreated.Value.ToString("yyyy-MM-dd").Contains(searchTerm)) // Search by date
+                                         );
+            }
+
+            return query
+                .OrderBy(e => e.DateCreated)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new ExpenseViewModel
+                {
+                    ExpenseId = s.ExpenseId,
+                    Title = s.Title,
+                    Description = s.Description,
+                    Amount = s.Amount,
+                    CategoryId = s.CategoryId,
+                    DateCreated = s.DateCreated != null ? s.DateCreated : DateTime.Now,
+                    Name = s.CategoryId.HasValue && categories.ContainsKey(s.CategoryId.Value)
+                        ? categories[s.CategoryId.Value]
+                        : "Unknown"
+                })
+                .ToList();
+        }
+
+
     }
 }

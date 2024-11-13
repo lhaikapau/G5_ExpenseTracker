@@ -92,6 +92,20 @@ namespace ASI.Basecode.WebApp.Controllers
             return View(data);
         }
 
+        [HttpGet]
+        public IActionResult Search(string term, int pageNumber = 1)
+        {
+            try
+            {
+                int pageSize = 5;
+                var results = _expenseService.FilterByTitle(UserId, term, pageNumber, pageSize);
+                return Json(results);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
 
         #endregion
 
