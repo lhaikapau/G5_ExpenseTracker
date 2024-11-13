@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
+                <div class="card" style="width: 160%; height: 800px; margin-left: -195px; margin-top: 70px; border: none;">
 
                     <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                         <h5 class="card-title mb-0">Trend Expenses Trend</h5>
@@ -22,10 +22,10 @@
                                     <option value="@y" selected="@isSelected">@y</option>
                                 }
                             </select>
-                            <button id="filterButton" class="btn btn-primary ms-2" style="background-color: #4b0082; color: white; width: auto; margin-top:-25px; margin-left: 50px;">Filter</button>
+                            <button id="filterButton" class="btn btn-primary ms-2" style="background-color: #4b0082; color: white; width: auto; margin-top:-25px;border: none; margin-left: 15px;">Filter</button>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="height: 800px;">
                         <canvas id="expensesChart" style="height: 400px;"></canvas>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div>
-        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
+        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 15px;">Back to List</a>
 
     </div>
 </body>
