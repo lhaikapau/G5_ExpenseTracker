@@ -57,7 +57,7 @@ namespace ASI.Basecode.Services.Services
             var data = _expenseRepository
                 .RetrieveAll()
                 .Where(c => c.CreatedBy == UserId && c.DateDeleted == null) // Filter by userId
-                .OrderBy(e => e.DateCreated)
+                .OrderByDescending(e => e.DateCreated)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new ExpenseViewModel

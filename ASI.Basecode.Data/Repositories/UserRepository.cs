@@ -31,6 +31,10 @@ namespace ASI.Basecode.Data.Repositories
             this.GetDbSet<User>().Add(user);
             UnitOfWork.SaveChanges();
         }
+        public User GetUserByUsername(string username)
+        {
+            return this.GetDbSet<User>().FirstOrDefault(x => x.Username == username);
+        }
 
     }
 }

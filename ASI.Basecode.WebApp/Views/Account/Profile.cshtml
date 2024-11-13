@@ -1,0 +1,24 @@
+﻿@model ASI.Basecode.Data.Models.User
+
+<h2>User Profile</h2>
+<div>
+    <p><strong>Username:</strong> @Model.Username</p>
+    <p><strong>User ID:</strong> @Model.UserId</p>
+    <p>
+        <strong>Password:</strong>
+        <input type="password" id="password" value="@Model.Password" readonly />
+        <button type="button" onclick="togglePassword()">Show/Hide</button>
+    </p>
+</div>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById("password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    }
+</script>
+

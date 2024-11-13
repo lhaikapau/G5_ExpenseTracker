@@ -8,5 +8,7 @@ namespace ASI.Basecode.Services.Interfaces
     {
         LoginResult AuthenticateUser(string UserId, string password, ref User user);
         void AddUser(UserViewModel model);
+        // Add the GetUserById method to the interface
+        User GetUserByUsername(string username); // Add this method
     }
 }

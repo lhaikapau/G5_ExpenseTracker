@@ -157,6 +157,27 @@ namespace ASI.Basecode.WebApp.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        
+        [HttpGet]
+        [Authorize]
+        public IActionResult Profile()
+        {
+            string username = HttpContext.Session.GetString("UserName"); // Retrieve the logged-in username
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = _userService.GetUserByUsername(username); // Assuming this method exists
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+
+
+
     }
 }
