@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
+
 <header class="@((ViewBag.LoginView == true) ? "hide-navbar" : "")">
+    <link href="/css/logout.css" rel="stylesheet"></link>
     <div class="logosec hover-pointer">
         <img src="~/img/PocketPALHeader.svg"
              style="width: 145px;" alt="logo"
@@ -18,14 +20,42 @@
                 <ul>
                     <li>
                         <i class="fa-solid fa-gear"></i>
-                        <a href="#">Settings</a>
+                        <a href="#">Profile Settings</a>
                     </li>
                     <li>
                         <i class="fa-solid fa-right-from-bracket"></i>
-                        <a asp-action="SignOutUser" asp-controller="Account">Logout</a>
+                        <a href="javascript:void(0);" onclick="showLogoutModal()">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </header>
+
+<div id="logoutModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h4>Confirm Logout</h4>
+        <p>Are you sure you want to log out?</p>
+        <div class="modal-actions">
+            <button onclick="confirmLogout()">Logout</button>
+            <button onclick="hideLogoutModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showLogoutModal() {
+        document.getElementById("logoutModal").style.display = "flex";
+    }
+
+    function hideLogoutModal() {
+        document.getElementById("logoutModal").style.display = "none";
+    }
+
+    function confirmLogout() {
+        // Redirect to the Logout action
+        window.location.href = '@Url.Action("SignOutUser", "Account")';
+    }
+</script>
+
+
