@@ -13,6 +13,7 @@
                 <form asp-action="Edit" enctype="multipart/form-data" id="editExpenseForm">
                     <input type="hidden" name="ExpenseId" asp-for="ExpenseId" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                     <div class="form-group mb-3">
                         <label asp-for="Title" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
                         <input name="Title" asp-for="Title" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
@@ -54,3 +55,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+

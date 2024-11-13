@@ -129,5 +129,28 @@ namespace ASI.Basecode.Services.Services
                 _categoryRepository.UpdateCategory(category);
             }
         }
+
+        public List<CategoryViewModel> FilterByName(string userId, string searchTerm, int pageNumber = 1, int pageSize = 5)
+        {
+            var query = _categoryRepository
+                .RetrieveAll()
+                .Where(c => c.CreatedBy == userId && c.DateDeleted == null);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(c => c.Name.ToLower().StartsWith(searchTerm.ToLower()));
+            }
+
+            return query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new CategoryViewModel
+                {
+                    CategoryId = s.CategoryId,
+                    Name = s.Name,
+                    Description = s.Description
+                })
+                .ToList();
+        }
     }
 }
