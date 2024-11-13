@@ -802,7 +802,8 @@ body {
 }
 
 .card {
-    width: 450px;
+    width: 760px;
+    height: 490px;
     border-radius: 4px 4px 0 0;
 }
 
@@ -814,22 +815,27 @@ body {
 }
 
 .homepage-container {
-    max-width: 1500px;
-    width: 1000px;
-    margin-left: 300px;
-    margin-top: 50px;
+    max-width: 5000px;
+    width: 1700px;
+    height: 820px; /* Adjust height to desired value */
+    margin-left: 35px;
+    margin-top: 70px;
     padding: 2rem;
     background-color: #f0f0f7; /* Bright white background for high contrast */
     border: 4px solid #9370DB; /* Lavender border */
     border-radius: 12px;
 }
+#categoryList {
+    height: 395px; /* Or whatever height you want */
+    overflow-y: auto;
+}
 
 .scrollable-list {
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #ffffff; /* White background for list */
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
 }
 
     .scrollable-list::-webkit-scrollbar {
@@ -903,8 +909,8 @@ body {
     font-size: 50px !important;
     font-weight: bold !important;
     color: #4b0082;
-    margin-bottom: 30px;
-    margin-left: -100px;
+    margin-bottom: 20px;
+    margin-left: -80px;
 }
 
 .circle-three {
@@ -928,6 +934,10 @@ body {
     z-index: 10;
     opacity: 0.4; /* Set transparency to 50% */
 }
+.modal-backdrop {
+    background-color: rgba(64, 64, 64, 0.7); /* Darker gray with higher opacity */
+}
+
 
 .modal-backdrop {
     background-color: rgba(64, 64, 64, 0.7); /* Darker gray with higher opacity */
