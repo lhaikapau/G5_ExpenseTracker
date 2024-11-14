@@ -6,21 +6,32 @@
     position: relative;
     margin: 40px;
     padding: 20px; /* Add padding for spacing */
-    border: 2px solid #ddd; /* Light border around the container */
-    border-radius: 12px; /* Rounded corners */
-    background-color: #f9f9f9; /* Light background color */
+    background-color: #f0f0f7; /* Bright white background for high contrast */
+    border: 4px solid #9370DB; /* Lavender border */
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    transition: all 0.3s ease; /* Smooth transition */
+    transition: margin-left 1s ease; /* Smooth transition */
 }
 
 
-    /* Header styling */
-    .page-container h1 {
-        font-size: 2rem;
-        color: #333; /* Dark color for the title */
-        text-align: center;
-        margin-bottom: 20px; /* Space below the title */
-    }
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 90px;
+    padding: 20px;
+    background-color: #f0f0f7; /* Bright white background for high contrast */
+    border: 4px solid #9370DB; /* Lavender border */
+    border-radius: 12px;
+}
+
+/* Header styling */
+.page-container h1 {
+    font-size: 2rem;
+    color: #333; /* Dark color for the title */
+    text-align: center;
+    margin-bottom: 20px; /* Space below the title */
+}
 
 /* Styling for horizontal line */
 hr {
@@ -52,6 +63,7 @@ hr {
         .create-container .btn:hover {
             background-color: #0056b3; /* Darker blue on hover */
         }
+
 .create-card {
     width: 30rem;
     padding: 2rem;
@@ -123,9 +135,10 @@ hr {
     opacity: 0.8;
 }
 
-.create-btn{
+.create-btn {
     text-align: center;
 }
-.modal-body{
+
+.modal-body {
     align-items: center;
 }
