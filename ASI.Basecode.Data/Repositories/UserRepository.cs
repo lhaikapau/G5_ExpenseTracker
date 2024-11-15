@@ -1,6 +1,7 @@
 ﻿using ASI.Basecode.Data.Interfaces;
 using ASI.Basecode.Data.Models;
 using Basecode.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,16 @@ namespace ASI.Basecode.Data.Repositories
         public User GetUserByUsername(string username)
         {
             return this.GetDbSet<User>().FirstOrDefault(x => x.Username == username);
+        }
+
+        public void UpdateUser(User user)
+        {
+            var existingUser = this.GetDbSet<User>().Find(user.Id);
+            if (existingUser != null)
+            {
+                this.Context.Entry(existingUser).CurrentValues.SetValues(user);
+                UnitOfWork.SaveChanges();
+            }
         }
 
     }
