@@ -22,5 +22,6 @@ namespace ASI.Basecode.Services.ServiceModels
 
         [Required(ErrorMessage = "Required Category Description.")]
         public string Description { get; set; }
+
     }
 }

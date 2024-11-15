@@ -21,7 +21,7 @@
 
                     <div class="form-group mb-3">
                         <label asp-for="Amount" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <input name="Amount" asp-for="Amount" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
+                        <input type="number" name="Amount" asp-for="Amount" class="form-control" min="0" required style="border-radius: 5px; border: 1px solid #9370DB;" />
                         <span asp-validation-for="Amount" class="text-danger"></span>
                     </div>
 

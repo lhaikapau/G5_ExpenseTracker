@@ -2,11 +2,11 @@
     ViewData["Title"] = "Report Page";
 }
 
-<div class="container">
+<div class="page-container">
     <!-- Month Comparison Section -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
+    
+    <div class="col-12">
+        <div class="card" style="width: 100%; height: 700px; border: none;">
                 <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                     <h5 class="card-title mb-0">Month-to-Month Comparison</h5>
                     <div class="d-flex justify-content-end">
@@ -41,13 +41,13 @@
                 <div class="card-body" style="height: 100%; padding: 5;">
                     <canvas id="comparisonChart" style="width: 95% !important; height: 100% !important;"></canvas>
                 </div>
-            </div>
         </div>
     </div>
+    
 </div>
 
-<div>
-    <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
+<div style="display: flex; justify-content: center; margin-top: 40px;">
+    <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none;">Back to List</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
