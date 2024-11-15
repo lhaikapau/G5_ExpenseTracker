@@ -1,55 +1,51 @@
 ﻿@model ASI.Basecode.Services.ServiceModels.ExpenseViewModel
 
-<div class="modal fade" id="createExpenseModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-        <div class="modal-content" style="background-color: #f4f4f9; border-radius: 8px; width: 500px;">
-            <div class="modal-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white;">
-                <h5 class="modal-title" id="createModalLabel" style="font-weight: bold;color:white;">Create Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: #483D8B;">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="padding: 20px;">
-                <form asp-action="Create" enctype="multipart/form-data">
-                    <input type="hidden" name="ExpenseId" asp-for="ExpenseId" />
+<div id="createExpenseModal" class="custom-modal-overlay">
+    <div class="custom-modal">
+        <div class="custom-modal-header">
+            <h5 class="custom-modal-title">Create Expense</h5>
+            <span class="custom-modal-close" onclick="closeCreateModal()">&times;</span>
+        </div>
+        <div class="custom-modal-body">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <input type="hidden" name="ExpenseId" asp-for="ExpenseId" />
 
-                    <div class="form-group mb-3">
-                        <label asp-for="Title" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <input name="Title" asp-for="Title" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="Title" class="custom-label"></label>
+                    <input name="Title" asp-for="Title" class="custom-input" />
+                    <span asp-validation-for="Title" class="custom-text-danger"></span>
+                </div>
 
-                    <div class="form-group mb-3">
-                        <label asp-for="Amount" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <input name="Amount" asp-for="Amount" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB;" />
-                        <span asp-validation-for="Amount" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="custom-label"></label>
+                    <input name="Amount" asp-for="Amount" class="custom-input" />
+                    <span asp-validation-for="Amount" class="custom-text-danger"></span>
+                </div>
 
-                    <div class="form-group mb-3">
-                        <label asp-for="Description" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <textarea name="Description" asp-for="Description" class="form-control" style="border-radius: 5px; border: 1px solid #9370DB; resize: vertical;"></textarea>
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="custom-label"></label>
+                    <textarea name="Description" asp-for="Description" class="custom-textarea"></textarea>
+                    <span asp-validation-for="Description" class="custom-text-danger"></span>
+                </div>
 
-                    <div class="form-group mb-3">
-                        <label asp-for="DateCreated" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <input name="DateCreated" asp-for="DateCreated" class="form-control" type="date" style="border-radius: 5px; border: 1px solid #9370DB;" />
-                        <span asp-validation-for="DateCreated" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="DateCreated" class="custom-label"></label>
+                    <input name="DateCreated" asp-for="DateCreated" class="custom-input" type="date" />
+                    <span asp-validation-for="DateCreated" class="custom-text-danger"></span>
+                </div>
 
-                    <div class="form-group mb-3">
-                        <label asp-for="CategoryId" class="control-label" style="font-weight: bold; color: #483D8B;"></label>
-                        <select name="CategoryId" asp-for="CategoryId" class="form-control" id="categoryDropdown" style="border-radius: 5px; border: 1px solid #9370DB;">
-                            <option value="">-- Select Category --</option>
-                        </select>
-                        <span asp-validation-for="CategoryId" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="custom-label"></label>
+                    <select name="CategoryId" asp-for="CategoryId" class="custom-select" id="categoryDropdown">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="custom-text-danger"></span>
+                </div>
 
-                    <div class="create-btn" style="text-align: center;">
-                        <input type="submit" value="Create" class="btn btn-primary" style="background-color: #483D8B; border: none; width: 100px;" />
-                    </div>
-                </form>
-            </div>
+                <div class="form-actions">
+                    <input type="submit" value="Create" class="custom-btn" />
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -59,3 +55,120 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    /* Custom Modal Overlay */
+    .custom-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Custom Modal */
+    .custom-modal {
+        background-color: #f4f4f9;
+        border-radius: 8px;
+        width: 500px;
+        max-width: 90%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Custom Modal Header */
+    .custom-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(to right, #4b0082, #9370db);
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .custom-modal-title {
+        font-weight: bold;
+        color: white;
+    }
+
+    .custom-modal-close {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #483d8b;
+    }
+
+    /* Modal Body */
+    .custom-modal-body {
+        padding: 20px;
+    }
+
+    /* Form Group */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .custom-label {
+        font-weight: bold;
+        color: #483d8b;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .custom-input, .custom-select, .custom-textarea {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #9370db;
+        padding: 10px;
+    }
+
+    .custom-textarea {
+        resize: vertical;
+    }
+
+    /* Custom Button */
+    .form-actions {
+        text-align: center;
+    }
+
+    .custom-btn {
+        background-color: #483d8b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 100px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .custom-text-danger {
+        color: red;
+    }
+
+    /* Display Modal */
+    .custom-modal-overlay.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function openCreateModal() {
+        LoadCategoriesCreate();
+        document.getElementById('createExpenseModal').classList.add('visible');
+    }
+
+    function closeCreateModal() {
+        document.getElementById('createExpenseModal').classList.remove('visible');
+    }
+
+</script>
