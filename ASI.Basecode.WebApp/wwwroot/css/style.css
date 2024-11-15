@@ -1,4 +1,4 @@
-﻿@import url( "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+﻿﻿@import url( "https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
     margin: 0;
@@ -22,7 +22,7 @@
 body {
     background-color: var(--background-color4);
     max-width: 100%;
-    height: 100%;
+    max-height: 100%;
     overflow-x: hidden;
     margin-top: 70px;
     display: flex;
@@ -137,7 +137,8 @@ header {
     max-height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 40px 30px 30px 30px;
+    padding: 30px 30px 30px 30px;
+    justify-content: center;
 }
 
     .main::-webkit-scrollbar-thumb {
@@ -362,97 +363,9 @@ header {
     border-radius: 4px;
 }
 
-/*Side Bar*/
 
-#sidebar {
-    background-color: #483D8B; /* Sidebar background color */
-    color: #fefefe; /* Change text color to white */
-    position: fixed; /* Fixed positioning */
-    top: 70px; /* Below header */
-    left: 0; /* Align to the left */
-    width: 200px; /* Width of the sidebar */
-    height: calc(100vh - 70px); /* Full height minus header */
-    padding: 20px 0; /* Top and bottom padding */
-    overflow-y: auto; /* Scroll if content exceeds height */
-    z-index: 99; /* Above other content */
 }
 
-
-    #sidebar.collapsed {
-        width: 80px; /* Width when minimized */
-        padding: 20px 0; /* Ensure padding remains */
-    }
-
-        #sidebar.collapsed .nav-link {
-            padding: 10px 0; /* Adjust padding when minimized */
-        }
-
-        #sidebar.collapsed ~ .container {
-            margin-left: 80px; /* Adjust container margin when sidebar is minimized */
-        }
-
-        #sidebar.collapsed .sidebar-heading {
-            padding: 15px 10px;
-            justify-content: center;
-        }
-
-        #sidebar.collapsed #toggleSidebar {
-            width: 100%;
-            margin-left: 0;
-        }
-
-        #sidebar.collapsed #sidebarTitle {
-            display: none;
-        }
-
-.sidebar-heading {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #ddd;
-}
-
-#sidebarTitle.title {
-    color: #343a40;
-    font-size: 1.1rem;
-    margin-right: auto;
-}
-
-
-#toggleSidebar {
-    padding: 5px 10px;
-    font-size: 0.9rem;
-    color: #6c757d;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    background-color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-
-    #toggleSidebar:hover {
-        color: #0056b3;
-        background-color: #e2e6ea;
-    }
-
-    #toggleSidebar i {
-        font-size: 1.2rem;
-    }
-
-.side_nav {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-item {
-    margin: 0;
-}
 
 .nav-link {
     display: block;
@@ -463,17 +376,15 @@ header {
 }
 
     .nav-link:hover {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(198, 189, 248, 0.825);
     }
 
 .container {
     margin-left: 200px;
-}
-
-.side_nav .nav-link {
-    display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* Register Container */
@@ -627,7 +538,6 @@ body {
     padding: 20px;
     box-sizing: border-box;
     margin: 0;
-    margin-left: 150px;
 }
 
 /* Login UI - Card Styling */
@@ -770,7 +680,7 @@ body {
 .circle-one {
     width: 500px;
     height: 500px;
-    top: -20%;
+    top: -10%;
     left: -100px;
     background-color: #483D8B;
     animation: bounce 4s infinite ease-in-out;
@@ -779,7 +689,7 @@ body {
 .circle-two {
     width: 500px;
     height: 500px;
-    bottom: -20%;
+    bottom: -10%;
     right: -100px;
     background-color: #9370DB;
     animation: bounce 4.5s infinite ease-in-out;
@@ -802,7 +712,8 @@ body {
 }
 
 .card {
-    width: 450px;
+    width: 760px;
+    height: 490px;
     border-radius: 4px 4px 0 0;
 }
 
@@ -813,23 +724,17 @@ body {
     border-radius: 4px 4px 0 0; /* Rounded top edges */
 }
 
-.homepage-container {
-    max-width: 1500px;
-    width: 1000px;
-    margin-left: 300px;
-    margin-top: 50px;
-    padding: 2rem;
-    background-color: #f0f0f7; /* Bright white background for high contrast */
-    border: 4px solid #9370DB; /* Lavender border */
-    border-radius: 12px;
+#categoryList {
+    height: 395px; /* Or whatever height you want */
+    overflow-y: auto;
 }
 
 .scrollable-list {
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: #ffffff; /* White background for list */
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    max-height: 600px !important;
+    overflow-y: auto !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
 }
 
     .scrollable-list::-webkit-scrollbar {
@@ -861,15 +766,6 @@ body {
     margin-top: -10px; /* Adjust this value as needed */
 }
 
-.page-container {
-    width: 1655px;
-    margin-left: 300px;
-    margin-top: 50px;
-    padding: 2rem;
-    background-color: #f0f0f7; /* Bright white background for high contrast */
-    border: 4px solid #9370DB; /* Lavender border */
-    border-radius: 12px;
-}
 /* Keyframe Animation for Fade-in */
 @keyframes fadeIn {
     0% {
@@ -903,8 +799,8 @@ body {
     font-size: 50px !important;
     font-weight: bold !important;
     color: #4b0082;
-    margin-bottom: 30px;
-    margin-left: -100px;
+    margin-bottom: 20px;
+    margin-left: -80px;
 }
 
 .circle-three {
@@ -925,7 +821,6 @@ body {
     background-color: #7D60B8;
     animation: bounce 4.5s infinite ease-in-out;
     animation-delay: 2s;
-    z-index: 10;
     opacity: 0.4; /* Set transparency to 50% */
 }
 

@@ -18,7 +18,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-top: 90px;
+    position: relative;
+    margin: 90px 40px 40px 40px;
     padding: 20px;
     background-color: #f0f0f7; /* Bright white background for high contrast */
     border: 4px solid #9370DB; /* Lavender border */
