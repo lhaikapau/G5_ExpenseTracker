@@ -1,16 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Trends Report";
-}
+﻿@using System.Globalization
 
 @{
     ViewData["Title"] = "Trends Report";
 }
 
+
 <body style="background-color: #B3ACDB;">
     <div class="container">
         <div class="row mt-4">
             <div class="col-12">
-                <div class="card" style="width: 160%; height: 800px; margin-left: -195px; margin-top: 70px; border: none;">
+                <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
                     <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                         <h5 class="card-title mb-0">Trend Expenses Trend</h5>
                         <div class="d-flex justify-content-end">
@@ -21,7 +20,16 @@
                                     <option value="@y" selected="@isSelected">@y</option>
                                 }
                             </select>
-                            <button id="filterButton" class="btn btn-primary ms-2" style="background-color: #4b0082; color: white; width: auto; margin-top:-25px;border: none; margin-left: 15px;">Filter</button>
+                            <select id="monthSelect" class="form-select" style="width: auto; margin-top:-25px; margin-left: 10px;">
+                                <option value="0">All Months</option>
+                                @for (int m = 1; m <= 12; m++)
+                                {
+                                    var isSelected = m == (int?)ViewData["CurrentMonth"];
+                                    <option value="@m" selected="@isSelected">@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(m)</option>
+                                }
+                            </select>
+                            <button id="filterButton" class="btn btn-primary ms-2" style="background-color: #4b0082; color: white; width: auto; margin-top:-25px; margin-left: 50px;">Filter</button>
+                            <button id="resetButton" class="btn btn-secondary ms-2" style="background-color: #f0f0f0; color: black; width: auto; margin-top:-25px; margin-left: 10px;">Reset</button>
                         </div>
                     </div>
                     <div class="card-body" style="height: 800px;">
@@ -32,9 +40,10 @@
         </div>
     </div>
     <div>
-        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 15px;">Back to List</a>
+        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
     </div>
 </body>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -65,7 +74,7 @@
 
             // Create the chart
             var ctx = document.getElementById('expensesChart').getContext('2d');
-            new Chart(ctx, {
+            var chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: monthLabels,
@@ -122,21 +131,27 @@
                     },
                     barPercentage: 0.8,
                     categoryPercentage: 0.9
-                    }
-                });
+                }
+            });
 
-                // Year filter functionality
+            // Year and Month filter functionality
             document.getElementById('filterButton').addEventListener('click', function () {
                 var selectedYear = document.getElementById('yearSelect').value;
-                window.location.href = `?year=${selectedYear}`;
-                });
+                var selectedMonth = document.getElementById('monthSelect').value;
+                window.location.href = `?year=${selectedYear}&month=${selectedMonth}`;
+            });
 
-            } catch (error) {
+            // Reset functionality
+            document.getElementById('resetButton').addEventListener('click', function () {
+                window.location.href = `?year=${document.getElementById('yearSelect').value}&month=0`;
+            });
+
+        } catch (error) {
             console.error('Error creating chart:', error);
-            }
-        });
+        }
+    });
 
-        function generateColor(index) {
+    function generateColor(index) {
         const colors = [
             '118, 217, 54',   // #76d936 (Bright Green)
             '234, 180, 212',  // #eab4d4 (Light Pink)
@@ -152,13 +167,9 @@
             '255, 159, 64',   // #ff9f40 (Orange)
             '255, 99, 71',    // #FF6347 (Tomato)
             '173, 216, 230',  // #ADD8E6 (Light Blue)
-            '255, 105, 180',  // #FF69B4 (Hot Pink)
-            '244, 164, 96',   // #F4A460 (Sandy Brown)
-            '0, 255, 127',    // #00FF7F (Spring Green)
-            '255, 105, 180',  // #FF69B4 (Hot Pink)
-            '238, 130, 238'   // #EE82EE (Violet)
+            '255, 105, 180'   // #FF69B4 (Hot Pink)
         ];
         return colors[index % colors.length];
     }
-
+  
 </script>

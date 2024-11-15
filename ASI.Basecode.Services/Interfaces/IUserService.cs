@@ -10,5 +10,6 @@ namespace ASI.Basecode.Services.Interfaces
         void AddUser(UserViewModel model);
         // Add the GetUserById method to the interface
         User GetUserByUsername(string username); // Add this method
+        void UpdateUserProfile(EditProfileViewModel model, string currentUsername);
     }
 }

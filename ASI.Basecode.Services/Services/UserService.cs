@@ -56,5 +56,46 @@ namespace ASI.Basecode.Services.Services
             return _repository.GetUserByUsername(username);
         }
 
+        public void UpdateUserProfile(EditProfileViewModel model, string currentUsername)
+        {
+            var existingUser = _repository.GetUserByUsername(currentUsername);
+            if (existingUser == null)
+            {
+                throw new InvalidDataException("User not found");
+            }
+
+            // Verify current password if provided
+            if (!string.IsNullOrEmpty(model.CurrentPassword))
+            {
+                var currentPasswordHash = PasswordManager.EncryptPassword(model.CurrentPassword);
+                if (existingUser.Password != currentPasswordHash)
+                {
+                    throw new InvalidDataException("Current password is incorrect");
+                }
+            }
+
+            // Check if new UserId already exists (excluding current user)
+            if (model.UserId != existingUser.UserId && _repository.UserExists(model.UserId))
+            {
+                throw new InvalidDataException(Resources.Messages.Errors.UserExists);
+            }
+
+            // Update basic information
+            existingUser.Username = model.Username;
+            existingUser.UserId = model.UserId;
+            existingUser.UpdatedTime = DateTime.Now;
+
+            // Update password if provided
+            if (!string.IsNullOrEmpty(model.NewPassword))
+            {
+                if (model.NewPassword != model.ConfirmNewPassword)
+                {
+                    throw new InvalidDataException("New passwords do not match");
+                }
+                existingUser.Password = PasswordManager.EncryptPassword(model.NewPassword);
+            }
+
+            _repository.UpdateUser(existingUser);
+        }
     }
 }

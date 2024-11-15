@@ -176,6 +176,70 @@ namespace ASI.Basecode.WebApp.Controllers
             return View(user);
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult EditProfile()
+        {
+            string username = HttpContext.Session.GetString("UserName");
+            if (string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("Login");
+            }
+
+            var user = _userService.GetUserByUsername(username);  // Ensure this returns a valid user
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var model = new EditProfileViewModel
+            {
+                Username = user.Username,
+                UserId = user.UserId
+            };
+
+            return View(model);  // Pass the model to the view
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult EditProfile(EditProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            try
+            {
+                string currentUsername = HttpContext.Session.GetString("UserName");
+
+                // Update user profile with the new information
+                _userService.UpdateUserProfile(model, currentUsername);
+
+                // If the username was changed, update the session
+                if (model.Username != currentUsername)
+                {
+                    HttpContext.Session.SetString("UserName", model.Username);  // Update session with new username
+                }
+
+                TempData["SuccessMessage"] = "Profile updated successfully";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (InvalidDataException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return View(model);
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = Resources.Messages.Errors.ServerError;
+                return View(model);
+            }
+        }
+
+
+
 
 
 

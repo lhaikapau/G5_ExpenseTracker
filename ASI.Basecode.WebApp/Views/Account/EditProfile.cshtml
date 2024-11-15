@@ -1,0 +1,66 @@
+﻿@model ASI.Basecode.Services.ServiceModels.EditProfileViewModel
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Edit Profile</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    <form asp-action="EditProfile" method="post">
+                        <div class="form-group">
+                            <label asp-for="Username">Username</label>
+                            <input asp-for="Username" class="form-control" required />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="UserId">User ID</label>
+                            <input asp-for="UserId" class="form-control" required readonly />
+                            <span asp-validation-for="UserId" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label asp-for="CurrentPassword">Current Password</label>
+                            <input asp-for="CurrentPassword" type="password" class="form-control" />
+                            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="NewPassword">New Password</label>
+                            <input asp-for="NewPassword" type="password" class="form-control" />
+                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ConfirmNewPassword">Confirm New Password</label>
+                            <input asp-for="ConfirmNewPassword" type="password" class="form-control" />
+                            <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                        </div>
+                    </form>
+                    <div class="mt-3 text-center">
+                        <a asp-controller="Home" asp-action="Index">Back To Home</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

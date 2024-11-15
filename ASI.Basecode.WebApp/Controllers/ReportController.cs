@@ -41,18 +41,19 @@ namespace ASI.Basecode.WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Trend(int? year)
+        public IActionResult Trend(int? year, int? month)
         {
             year = year ?? DateTime.Now.Year;
+            month = month ?? 0; // 0 means no filter, so display all months
 
             // Retrieve yearly data with all months and categories
-            var yearlyCategoryData = Enumerable.Range(1, 12).Select(month =>
+            var yearlyCategoryData = Enumerable.Range(1, 12).Select(monthIndex =>
             {
-                var monthlyExpenses = _expenseService.RetrieveByMonth(UserId, year.Value, month);
+                var monthlyExpenses = _expenseService.RetrieveByMonth(UserId, year.Value, monthIndex);
                 return new
                 {
-                    month,
-                    monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month),
+                    month = monthIndex,
+                    monthName = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(monthIndex),
                     categories = monthlyExpenses
                         .GroupBy(e => e.Name)
                         .Select(g => new { name = g.Key, amount = g.Sum(e => e.Amount ?? 0) })
@@ -60,11 +61,19 @@ namespace ASI.Basecode.WebApp.Controllers
                 };
             }).ToList();
 
+            // Filter data based on selected month (if any)
+            if (month > 0)
+            {
+                yearlyCategoryData = yearlyCategoryData.Where(data => data.month == month).ToList();
+            }
+
             ViewData["YearlyCategoryData"] = JsonSerializer.Serialize(yearlyCategoryData);
             ViewData["CurrentYear"] = year;
+            ViewData["CurrentMonth"] = month;
 
             return View();
         }
+
 
         [HttpGet]
         public IActionResult MonthVsMonth(int? year, int? month, int? compareMonth)
@@ -168,5 +177,7 @@ namespace ASI.Basecode.WebApp.Controllers
 
             return View();
         }
+
+        
     }
 }

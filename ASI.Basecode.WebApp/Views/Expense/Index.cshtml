@@ -232,33 +232,33 @@
                         data.forEach(function (item) {
                             const dateCreated = item.dateCreated ? new Date(item.dateCreated).toISOString().split('T')[0] : '';
                             const row = `
-                                <tr>
-                                    <td>${item.title || ''}</td>
-                                    <td>${item.description || ''}</td>
-                                    <td>${item.amount || ''}</td>
-                                    <td>${item.name || ''}</td>
-                                    <td>${dateCreated}</td>
-                                    <td class="text-center">
-                                        <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
-                                            <button class="btn btn-warning" data-toggle="modal"
-                                                    data-target="#editExpenseModal"
-                                                    data-id="${item.expenseId}"
-                                                    data-title="${item.title || ''}"
-                                                    data-amount="${item.amount || ''}"
-                                                    data-description="${item.description || ''}"
-                                                    data-datecreated="${dateCreated}"
-                                                    data-categoryid="${item.categoryId || ''}">
-                                                Edit
-                                            </button>
-                                            <a href="/Expense/Delete/${item.expenseId}"
-                                               class="btn btn-sm"
-                                               style="background-color: #C14444; color: white; height: 38px; display: flex; justify-content: center; align-items: center;">
-                                                Delete
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            `;
+                                        <tr>
+                                            <td>${item.title || ''}</td>
+                                            <td>${item.description || ''}</td>
+                                            <td>${item.amount || ''}</td>
+                                            <td>${item.name || ''}</td>
+                                            <td>${dateCreated}</td>
+                                            <td class="text-center">
+                                                <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+                                                    <button class="btn btn-warning" data-toggle="modal"
+                                                            data-target="#editExpenseModal"
+                                                            data-id="${item.expenseId}"
+                                                            data-title="${item.title || ''}"
+                                                            data-amount="${item.amount || ''}"
+                                                            data-description="${item.description || ''}"
+                                                            data-datecreated="${dateCreated}"
+                                                            data-categoryid="${item.categoryId || ''}">
+                                                        Edit
+                                                    </button>
+                                                    <a href="/Expense/Delete/${item.expenseId}"
+                                                       class="btn btn-sm"
+                                                       style="background-color: #C14444; color: white; height: 38px; display: flex; justify-content: center; align-items: center;">
+                                                        Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    `;
                             tbody.append(row);
                         });
                     } else {
