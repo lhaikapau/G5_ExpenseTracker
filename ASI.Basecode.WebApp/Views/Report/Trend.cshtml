@@ -5,11 +5,11 @@
 }
 
 
-<body style="background-color: #B3ACDB;">
-    <div class="container">
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card" style="width: 150%; height: 700px; margin-left: -140px; margin-top: 20px; border: none;">
+
+<div class="page-container">
+        
+    <div class="col-12">
+        <div div class="card" style="width: 100%; height:700px; border:none;">
                     <div class="card-header" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; height: 60px;">
                         <h5 class="card-title mb-0">Trend Expenses Trend</h5>
                         <div class="d-flex justify-content-end">
@@ -35,14 +35,13 @@
                     <div class="card-body" style="height: 800px;">
                         <canvas id="expensesChart" style="height: 400px;"></canvas>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
-    <div>
-        <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; margin-top: 40px;">Back to List</a>
+</div>
+<div style="display: flex; justify-content: center; margin-top: 40px;">
+    <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none;">Back to List</a>
     </div>
-</body>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

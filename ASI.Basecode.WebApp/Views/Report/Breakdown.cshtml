@@ -2,8 +2,8 @@
     ViewData["Title"] = "Expense Breakdown";
 }
 
-<div class="container">
-    <div class="col-md-6">
+<div class="page-container">
+    <div style="display: flex; justify-content: center; width:100%;">
         <div class="card">
             <div class="card-header">
                 <h5 class="card-title mb-0">Category Breakdown</h5>
@@ -39,8 +39,8 @@
     </div>
 </div>
 
-<div class="mt-3">
-    <a asp-action="Index">Back to List</a>
+<div style="display: flex; justify-content: center; margin-top: 40px;">
+    <a asp-action="Index" class="btn" style="background-image: linear-gradient(to right, #4b0082, #9370DB); color: white; border: none; ">Back to List</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

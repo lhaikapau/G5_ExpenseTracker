@@ -16,6 +16,7 @@ namespace ASI.Basecode.Services.ServiceModels
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Required Amount input.")]
+        [Range(0, double.MaxValue, ErrorMessage = "Amount must be a non-negative number.")]
         public double? Amount { get; set; }
 
         public string CreatedBy { get; set; }
