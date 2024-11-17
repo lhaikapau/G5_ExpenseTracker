@@ -58,6 +58,21 @@ header {
     left: 0;
 }
 
+header2 {
+    height: 70px;
+    width: 100vw;
+    padding: 0 0;
+    background-color: var(--background-color1);
+    z-index: 100;
+    box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Add this line */
+    top: 0; /* Ensure it's always at the top */
+    left: 0;
+}
+
 .logo {
     font-size: 27px;
     font-weight: 600;
@@ -738,6 +753,23 @@ body {
     border-radius: 4px 4px 0 0; /* Rounded top edges */
 }
 
+
+#categoryList {
+    height: 395px; /* Or whatever height you want */
+    overflow-y: auto;
+
+.homepage-container {
+    max-width: 5000px;
+    width: 1700px;
+    height: 820px; /* Adjust height to desired value */
+    margin-left: 35px;
+    margin-top: 70px;
+    padding: 2rem;
+    background-color: #f0f0f7; /* Bright white background for high contrast */
+    border: 4px solid #9370DB; /* Lavender border */
+    border-radius: 12px;
+
+}
 #categoryList {
     height: 395px; /* Or whatever height you want */
     overflow-y: auto;
@@ -816,7 +848,7 @@ body {
     color: #4b0082;
     margin-bottom: 20px;
     margin-left: -800px;
-}
+
 
 .circle-three {
     width: 500px;
@@ -839,6 +871,10 @@ body {
 
     opacity: 0.4; /* Set transparency to 50% */
 }
+.modal-backdrop {
+    background-color: rgba(64, 64, 64, 0.7); /* Darker gray with higher opacity */
+}
+
 
 .modal-backdrop {
     background-color: rgba(64, 64, 64, 0.7); /* Darker gray with higher opacity */

@@ -55,3 +55,119 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<style>
+    /* Custom Modal Overlay */
+    .custom-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    /* Custom Modal */
+    .custom-modal {
+        background-color: #f4f4f9;
+        border-radius: 8px;
+        width: 500px;
+        max-width: 90%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Custom Modal Header */
+    .custom-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-image: linear-gradient(to right, #4b0082, #9370db);
+        color: white;
+        padding: 10px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .custom-modal-title {
+        font-weight: bold;
+        color: white;
+    }
+
+    .custom-modal-close {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #483d8b;
+    }
+
+    /* Modal Body */
+    .custom-modal-body {
+        padding: 20px;
+    }
+
+    /* Form Group */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .custom-label {
+        font-weight: bold;
+        color: #483d8b;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .custom-input, .custom-select, .custom-textarea {
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #9370db;
+        padding: 10px;
+    }
+
+    .custom-textarea {
+        resize: vertical;
+    }
+
+    /* Custom Button */
+    .form-actions {
+        text-align: center;
+    }
+
+    .custom-btn {
+        background-color: #483d8b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 100px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .custom-text-danger {
+        color: red;
+    }
+
+    /* Display Modal */
+    .custom-modal-overlay.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+
+<script>
+    function openEditModal(button) {
+        EditExpense(button);
+        document.getElementById('editExpenseModal').classList.add('visible');
+    }
+
+    function closeEditModal() {
+        document.getElementById('editExpenseModal').classList.remove('visible');
+    }
+</script>
